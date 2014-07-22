@@ -3,9 +3,8 @@
 @media (min-width:1100px) { body {font-size:1.5rem;} } 
 html { 
 	font-size:100%;	/*best for responsive*/
-	} 
-body { 
-	background:url('openphoto.jpg');
+	 
+  background:url('openphoto.jpg');
 	background-position: 50% 50%; /*responsive background*/
 	background-repeat: no-repeat;
 	background-attachment: fixed;
