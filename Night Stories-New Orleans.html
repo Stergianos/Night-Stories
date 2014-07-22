@@ -14,12 +14,7 @@
 	<script type="text/javascript" src="scripts/SeamlessLoop.js"></script>
 	<script type="text/javascript">
 	
-		 function sound(){
-			document.getElementById('rain1').play();
-		 }
-		 function delay(){
-			setTimeout("sound()", 3000);
-		 }
+		 
 		function load(){
 			var loaded = localStorage.getItem('save');
 			window.location.href = loaded;
@@ -42,23 +37,7 @@
 <body background="openphoto.jpg">
 	<p>
 		<!-- main theme sound -->
-		<audio id="rain1" hidden = "hidden" controls  preload loop> 
-			
-			<source src = "rain.mp3"
-					type = "audio/mpeg"/> 
-			<source src = "rain.ogg"
-					type = "audio/ogg"/>		
-<source src = "rain.wav"
-					type = "audio/wav"/>					
-		</audio> 
-<audio id="rain2" hidden = "hidden" controls autoplay preload loop> 
-			<source src = "rain.ogg"
-					type = "audio/ogg"/>
-			<source src = "rain.mp3"
-					type = "audio/mp3"/> 
-<source src = "rain.wav"
-					type = "audio/wav"/>					
-		</audio> 
+		
 
 		<!-- starting screen buttons -->
 		<div class="wrappermain">
