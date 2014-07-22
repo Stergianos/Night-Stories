@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<meta charset="UTF-8">
+	<title>River</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/river.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">		
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+		var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+		var a_temp_cookie = '';
+		var cookie_name = '';
+		var cookie_value = '';
+		var b_cookie_found = false; 
+			for ( i = 0; i < a_all_cookies.length; i++ ){ 
+				a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+				cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+					if ( cookie_name == check_name ){ //check cookie
+						b_cookie_found = true;
+							if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+							}
+					return cookie_value;
+					break;
+					}	
+			a_temp_cookie = null;
+			cookie_name = '';
+			}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable first choice when clicked
+			document.getElementById('worker').disabled=true;
+		}
+		function disable2(){ // disable second choice when clicked
+			document.getElementById('foreman').disabled=true;
+		}
+		function enable(){ // enable exit from scene choice when all other choices are clicked
+		var bt1 = document.getElementById('worker');
+		var bt2 = document.getElementById('foreman');
+			if (bt1.disabled==true && bt2.disabled==true){
+				document.getElementById('exit').disabled=false;
+			}
+		}
+		function finalresult(){ // continue the story depending on success rate of dices 
+			var finalres = localStorage.getItem("final");
+			if (finalres == 1){
+				document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
+																"it's Jean Barrow informed him. It shouldn't have done it. " +
+																"The whole ingestigation is compromised and it's even weirder " +
+																"that he tried to hide something from me.";											
+			} 
+			else{
+				document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
+																"it's Jean Barrow informed him. It shouldn't have done it. " +
+																"The whole ingestigation is compromised.";														
+			}	
+		}
+		<!-- global attributes used by the external js file -->
+		var resist = 2;
+		var attribute = localStorage.getItem("social");
+		var skill = localStorage.getItem("lies");
+		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+	</script>
+	<script src="dice.js"></script> <!-- call external js file -->
+</head>
+<body onLoad="nobackforw(); check1(); check2(); enable();" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<p class="white">
+	The rain has stopped minutes ago but the wind keep blowing. Humidity found the chance to become a layer of thick fog.
+	Down the road a lone lamp flickers, giving a glimpse of life to the entrance of a port once crowded and full of life.
+	Passing under the big sign "Mississippi Express" someone can clearly see the docks. A river-boat over there standing
+	by a few wooden crates, waiting to be shipped. Two things catch the eye, the lighted cigarette of a worker taking his
+	break near the crates and the vivid light coming from the foremans' room.
+	<br/>
+	<p class="black">
+		<button type="button" id="worker" class="linkbutton" onclick="location.href='#openModal'; disable(); enable(); setCookie('worker', 'true');">• Hello there. 
+		Can i ask a couple of questions? It has to do with the death of Mr. Barrow.</button> <!-- first choice -->
+			<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
+				<div>
+					<a onclick="location.href='#close'" title="" class="close">x</a> <!-- close button of popup -->
+					<p>
+						Worker: (slowly exhales the smoke) I heard the news but I never met the guy in person. The closer
+						we ever got was, he in his car and me pushing crates.
+						<br/>
+						<br/>
+						Detective: Hmm I see. Then that will be all. Thank you.
+					</p>
+				</div>
+			</div>
+	</p>
+	<p class="black">
+		<button id="foreman" class="linkbutton" onclick="location.href='#openModal2'; disable2(); enable(); setCookie('foreman', 'true');">• Seeing movement
+		inside the room I decide to go there and knock the door.</button> <!-- second choice -->
+			<div id="openModal2" class="modalDialog2">
+				<div>
+					<p>
+						Foreman: Yes, come in!<br/>
+						...<br/>
+						Foreman: Can I help you?<br/>
+						Detective: I am private detective Mr. ...<br/>
+						Foreman: Oh yeah I am fully informed about you and I am at your disposal. My name is Norman Jones.<br/>
+						Detective: So you know about Mrs. Barrow death I assume. Enlighten me then. He had many enemies?<br/>
+						Jones: You know many businessmen wanted him out of the game but that's how business work. Less competition, more profit!
+						<br/><br/>	
+						<button class="linkbutton" style="color:black;" onclick="location.href='#openModal4'">• Maybe some of those men are able to 
+						push the limits to get what they want?</button> <!-- continue the conversation 1 -->
+						<button id="bla" class="linkbutton" style="color:black;" onclick="location.href='#openModal3'">• Well I am talking more about behind
+						the curtains stuff.</button> <!-- continue the conversation 2 -->
+					</p>
+				</div>
+			</div>
+			<div id="openModal3" class="modalDialog3">
+				<div>
+					<p>
+						<button id="rolldice" class="linkbutton" onclick="location.href='#openModal5'; roll(); finalresult();">Roll!</button>	
+					</p>
+				</div>
+			</div>
+			<div id="openModal4" class="modalDialog4">
+				<div>
+					<a onclick="location.href='#close4';" title="" class="close">x</a>
+					<p>
+						Jones: Don't you think it's a bit risky for men of their status?<br/>
+						Detective: Maybe you have a point. Anyway I need to get going now. Thanks for your time.
+					</p>
+				</div>
+			</div>
+			<div id="openModal5" class="modalDialog5">
+				<div>
+					<a onclick="location.href='#close5';" title="" class="close">x</a>
+					<p>
+						<p id="results"/> <!-- paragraphs for the innerHTML -->
+						<p id="results2"/>
+						<p id="answers"/>
+					</p>
+				</div>
+			</div>
+	</p>
+	<p class="black">
+		<button disabled="disabled" id="exit" class="linkbutton" onclick="location.href='bar.html'">• I think I am done here.</button> <!-- exit choice -->
+	</p>
+	<a id="river" href="river.html"></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+		var url = document.getElementById('river'); // store the current url for future load
+		localStorage.setItem('save', url);
+		function check1(){
+		if(getCookie("worker")=="true"){ //checks for cookie, if exists name/value keep button disable status
+			document.getElementById('worker').disabled=true;
+		}
+		}
+		function check2(){
+		if(getCookie("foreman")=="true"){
+			document.getElementById('foreman').disabled=true;
+		}	
+		}
+</script>
+</html>

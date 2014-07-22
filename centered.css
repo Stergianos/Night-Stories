@@ -1,0 +1,15 @@
+body { /*unselectable*/
+	background-color: black;
+	-webkit-user-select: none;      
+	-moz-user-select: none; 
+	-ms-user-select: none;
+}
+p{
+	text-align: center;
+	position: fixed;
+	right: 0;
+	left: 0;
+	top: 40%;
+	font-size: 350%;
+	color: white;
+}

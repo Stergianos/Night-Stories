@@ -1,0 +1,144 @@
+@media (min-width:640px) { body {font-size:1rem;} } /*responsive text*/
+@media (min-width:960px) { body {font-size:1.2rem;} } 
+@media (min-width:1100px) { body {font-size:1.5rem;} } 
+html { 
+	font-size:100%;	/*best for responsive*/
+	} 
+body { 
+	background-position: 50% 50%; /*responsive background*/
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	-webkit-user-select: none; /*unselectable*/      
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+}
+.wrappermain{ /*ccs main button */
+position:absolute;
+bottom: 1%;
+text-align:center;
+display: inline-block; 
+width: 100px; 
+margin-left:50%;
+margin-right:50%;
+	}
+.wrapper2{ /*css secondary buttons */
+	text-align:right;
+	}
+.play{
+	border:1px solid gray;
+	cursor: pointer;
+	}
+.continue{
+	border:1px solid gray;
+	cursor: pointer;
+	}
+.sound{
+	position:absolute;
+	right: 9%;
+	top: 1%;
+	width: 3.7%; /*responsive round button*/
+    height: 0;
+    padding-bottom: 3.7%;
+    border-radius: 50%; 
+    border: 2px solid #f5f5f5; 
+    overflow: hidden;
+    /*background: #464646;
+    box-shadow: 0 0 3px gray;*/
+	}
+.help{
+	position:absolute;
+	right: 5%;
+	top: 1%;
+	width: 3.7%; /*responsive round button*/
+    height: 0;
+    padding-bottom: 3.7%;
+    border-radius: 50%; 
+    border: 2px solid #f5f5f5; 
+    overflow: hidden;
+    /*background: #464646;
+    box-shadow: 0 0 3px gray;*/
+	}
+.about{
+	position:absolute;
+	right: 1%;
+	top: 1%;
+	width: 3.7%; /*responsive round button*/
+    height: 0;
+    padding-bottom: 3.7%;
+    border-radius: 50%; 
+    border: 2px solid #f5f5f5; 
+    overflow: hidden;
+    /*background: #464646;
+    box-shadow: 0 0 3px gray;*/
+	}
+.exit{
+	/*background-image:url('door.jpg') no repeat; eikona sto koumpi*/
+	position:absolute;
+	right: 1%;
+	bottom: 1%;
+	width: 3.7%; /*responsive round button*/
+    height: 0;
+    padding-bottom: 3.7%;
+    border-radius: 50%;
+    border: 2px solid black;
+    overflow: hidden;
+    /*background: #464646;*/
+    box-shadow: 0 0 3px gray;
+	}
+.modalDialog { /*creation of modal box*/
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+}
+.modalDialog:target { /*creation of pseudo-class*/
+	opacity:1;
+	pointer-events: auto;
+}
+.modalDialog > div { /*style the div inside modal box*/
+	cursor:cursor;
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+	padding-bottom:3.7%;
+	padding-right:3.7%;
+	z-index:200;
+}
+.close { /*style close button*/
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.close:hover { 
+background: red; 
+cursor:pointer;
+}
