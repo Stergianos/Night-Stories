@@ -45,6 +45,7 @@ tr.spacedown > td{
 	box-shadow: 7px 9px 7px black;
 }
 .linkbuttoneffect:active{
+	background-color:none;
 	-webkit-box-shadow: 7px 2px 7px black;
 	-moz-box-shadow: 7px 2px 7px black;
 	box-shadow: 7px 2px 7px black;
@@ -54,13 +55,19 @@ tr.spacedown > td{
 .linkbuttoneffect:disabled{
 	color:grey;
 }
-.wrappermain{ /*ccs main button */
+.wrappermain{ /*ccs main buttons */
 	position:absolute;
 	bottom: 4%;
 	text-align:center;
 	display: inline-block; 
 	margin-left:50%;
 	margin-right:50%;
+}
+.links{ 
+	cursor: pointer;
+}
+.links:active{
+	background-color:none;
 }
 .linkbutton{ /*make button appear like a link*/
 	background:none!important;

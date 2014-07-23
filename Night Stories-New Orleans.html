@@ -11,18 +11,8 @@
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript">	
-		 function sound(){
-			document.getElementById('rain1').play();
-		 }
-		 function delay(){
-			setTimeout("sound()", 15000);
-		 }
-		function cont(){ // if value of save exists enable continue button
-		var getval = localStorage.getItem('urlval');
-		if (getval == "true"){
-			document.getElementById('continue').disabled = false;
-		}
-		}
+		 
+		
 		function load(){
 			var loaded = localStorage.getItem('save');
 			window.location.href = loaded;
@@ -31,7 +21,6 @@
 </head>
 <body onload="delay(); cont();">
 		<!-- main theme sound -->
-				
 		
 		<!-- screen buttons -->
 		<div class="wrappermain">
@@ -50,7 +39,7 @@
 			</table>
 		</div>
 			<button onclick="document.getElementById('rain').muted=!document.getElementById('rain').muted" class="linkbutton" type="button"><img src="sound.jpg" class="imagesound"/></button>
-			<a class="linkbutton" onclick="location.href='#openModal2'"><img src="help.jpg" class="imagehelp"/></a>
+			<a class="links" onclick="location.href='#openModal2'"><img src="help.jpg" class="imagehelp"/></a>
 				<div id="openModal2" class="modalDialog2">
 					<div>
 						<!-- close button -->
@@ -72,7 +61,7 @@
 						</p>
 					</div>
 				</div>
-			<a class="linkbutton" onclick="location.href='#openModal'"><img src="about.jpg" class="imageabout"/></a>
+			<a class="links" onclick="location.href='#openModal'"><img src="about.jpg" class="imageabout"/></a>
 				<!-- creation of the pop up window about -->
 				<div id="openModal" class="modalDialog">
 					<div>

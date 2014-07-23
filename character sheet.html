@@ -11,7 +11,7 @@
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript">
-	<!-- count total points of attributes and skills and save on local storage -->
+	//<!-- count total points of attributes and skills and save on local storage -->
 		function phys(ph, ph1, ph2, ph3, ph4){
 		var ph = 0;
 		var ph1 = document.getElementById('Physical1').checked;
@@ -144,7 +144,7 @@
 			}
 		localStorage.setItem("intimidation",intm);
 		}
-		function check(che,che2,che3,che4){ <!-- restrictions of order of points -->
+		function check(che,che2,che3,che4){ //<!-- restrictions of order of points -->
 		var che = document.getElementById('Physical1').checked;
 		var che2 = document.getElementById('Physical2').checked;
 		var che3 = document.getElementById('Physical3').checked;
@@ -243,7 +243,7 @@
 				document.getElementById('Social4').checked=false;
 			}
 		}
-		function limitat(i){ <!--restriction for total attribute points-->
+		function limitat(i){ //<!--restriction for total attribute points-->
 		var count = 0;
 			for (var i=0; i<document.getElementsByName('attribute').length; i++){
 				if (document.getElementsByName('attribute')[i].checked){
@@ -265,7 +265,7 @@
 				}
 			}
 		}
-		function limitsk(i){ <!--restriction for total skill points-->
+		function limitsk(i){ //<!--restriction for total skill points-->
 		var count = 0;
 			for (var i=0; i<document.getElementsByName('skill').length; i++){
 				if (document.getElementsByName('skill')[i].checked){
@@ -284,7 +284,7 @@
 				}
 			}
 		}
-		function enable(i){ <!--enable all checkboxes after reset -->
+		function enable(i){ //<!--enable all checkboxes after reset -->
 			for (var i=0; i<document.getElementsByName('attribute').length; i++){
 				if (document.getElementsByName('attribute')[i].disabled=true){
 					document.getElementsByName('attribute')[i].disabled=false;
@@ -296,7 +296,7 @@
 				}
 			}
 		}
-		function done(){ <!-- enable submit button when 11 points are assigned -->
+		function done(){ //<!-- enable submit button when 11 points are assigned -->
 		var count = 0;
 		document.getElementById('finish').disabled = true;
 			for (i=0; i<document.getElementsByTagName('input').length; i++){
