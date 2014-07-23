@@ -22,6 +22,7 @@ html {
 	-webkit-user-select: none; /*unselectable*/      
 	-moz-user-select: none; 
 	-ms-user-select: none; 
+	
 }
 tr.spacedown > td{
   padding-bottom: 0.5rem;
@@ -67,7 +68,7 @@ tr.spacedown > td{
 	cursor: pointer;
 }
 .links:active{
-	background-color:none;
+	background-color:black;
 }
 .linkbutton{ /*make button appear like a link*/
 	background:none!important;
