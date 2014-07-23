@@ -1,0 +1,111 @@
+@media (min-width:320px) { body {font-size:0.7rem;} } /*responsive*/
+@media (min-width:480px) { body {font-size:0.9rem;} }
+@media (min-width:720px) { body {font-size:1.1rem;} }
+@media (min-width:960px) { body {font-size:1.3rem;} } 
+@media (min-width:1024px) { body {font-size:1.5rem;} }
+@media (min-width:1280px) { body {font-size:1.7rem;} }
+@media (min-width:1366px) { body {font-size:1.9rem;} }
+@media (min-width:1440px) { body {font-size:2.1rem;} }
+@media (min-width:1680px) { body {font-size:2.3rem;} }
+html { 
+	font-size:100%;	/*best for responsive*/
+	background-color: black; /*unselectable*/
+	-webkit-user-select: none;      
+	-moz-user-select: none; 
+	-ms-user-select: none;
+}
+@font-face{ /*enter own txt-font*/
+	font-family: "Gill Sans Hel";
+	src: url('Gill Sans Hel.otf');
+}
+p {
+	font-family: "Gill Sans Hel";
+	text-align: justify; 
+	text-justify: auto;
+	padding-left: 7px;
+	padding-right: 7px;
+	font-size: 100%;
+	cursor: default;
+}
+fieldset {   
+  -moz-border-radius:5px;  
+  border-radius: 5px;  
+  -webkit-border-radius: 15px; 
+}
+.linkbutton{ /*make button appear like a link*/
+	background:none!important;
+	border:none; 
+	padding:0!important;
+	font-family: "Gill Sans Hel";
+	color: white;
+	font-size:100%;
+	outline:none;
+	outline-offset: 0;
+	cursor: pointer;
+	text-align: justify; 
+	text-justify: auto;
+}
+.linkbutton:disabled{
+	color:grey;
+}
+.white{
+	color: white;
+}
+.black{
+	color: black;
+}
+.modalDialog { /*creation of modal box*/
+	position: fixed;
+	font-family: "Gill Sans Hel";
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:0;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: none;
+	overflow: auto; /* for use of scrollbar */
+}
+.modalDialog:target { /*creation of pseudo-class*/
+	opacity:1;
+	pointer-events: auto;
+}
+.modalDialog > div { /*style the div inside modal box*/
+	cursor:default;
+	width: 50%;
+	position: relative;
+	margin: 10% auto;
+	padding: 5px 20px 13px 20px;
+	border-radius: 10px;
+	background: #fff;
+	background: -moz-linear-gradient(#fff, #999);
+	background: -webkit-linear-gradient(#fff, #999);
+	background: -o-linear-gradient(#fff, #999);
+	z-index:200;
+}
+.close { /*style close button*/
+	background: #606061;
+	color: #FFFFFF;
+	line-height: 25px;
+	position: absolute;
+	right: -12px;
+	text-align: center;
+	top: -10px;
+	width: 24px;
+	text-decoration: none;
+	font-weight: bold;
+	-webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+	-moz-box-shadow: 1px 1px 3px #000;
+	-webkit-box-shadow: 1px 1px 3px #000;
+	box-shadow: 1px 1px 3px #000;
+}
+.close:hover { 
+background: red; 
+cursor:pointer;
+}

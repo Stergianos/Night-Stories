@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<meta charset="UTF-8">
 	<title>River</title>
 	<link rel = "stylesheet"
@@ -85,6 +84,32 @@
 																"The whole ingestigation is compromised.";														
 			}	
 		}
+		function gotobar(){
+			window.location.href='bar.html';
+		}
+		function gotopolice(){
+			window.location.href='police.html';
+		}
+		function gotonext(){
+			window.location.href='mansion.html';
+		}
+		function choices(){ //check available player path choices
+			var b1 = localStorage.getItem("button1");
+			var b2 = localStorage.getItem("button2");
+			if (b1 != "1" && b2 != "2"){
+				document.getElementById('option1').innerHTML = "gerger" + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotobar()">• Bar</button>' +
+																'<br/>' + '<button type="button" class="linkbutton" style="color:black; onclick="gotopolice()"">• Police</button>';
+			}
+			if (b1 == "1" && b2 != "2"){
+				document.getElementById('option2').innerHTML = "fgwgwwg" + '<button type="button" class="linkbutton" style="color:black; onclick="gotobar()">• Bar</button>';
+			}
+			if (b1 != "1" && b2 == "2"){
+				document.getElementById('option3').innerHTML = "mpourdes" + '<button type="button" class="linkbutton" style="color:black; onclick="gotopolice()"">• Police</button>';
+			}
+			if (b1 == "1" && b2 == "2"){
+				document.getElementById('option4').innerHTML = "mpourdes vol.2" + '<button type="button" class="linkbutton" style="color:black; onclick="gotonext()"">• Mansion</button>';
+			}
+		}*/
 		<!-- global attributes used by the external js file -->
 		var resist = 2;
 		var attribute = localStorage.getItem("social");
@@ -96,15 +121,15 @@
 <body onLoad="nobackforw(); check1(); check2(); enable();" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
 	<p class="white">
-	The rain has stopped minutes ago but the wind keep blowing. Humidity found the chance to become a layer of thick fog.
+	The rain has stopped minutes ago but the wind keeps blowing. Humidity found the chance to become a layer of thick fog.
 	Down the road a lone lamp flickers, giving a glimpse of life to the entrance of a port once crowded and full of life.
 	Passing under the big sign "Mississippi Express" someone can clearly see the docks. A river-boat over there standing
 	by a few wooden crates, waiting to be shipped. Two things catch the eye, the lighted cigarette of a worker taking his
 	break near the crates and the vivid light coming from the foremans' room.
-	<br/>
+	</p>
 	<p class="black">
 		<button type="button" id="worker" class="linkbutton" onclick="location.href='#openModal'; disable(); enable(); setCookie('worker', 'true');">• Hello there. 
-		Can i ask a couple of questions? It has to do with the death of Mr. Barrow.</button> <!-- first choice -->
+		Can I ask a couple of questions? It has to do with the death of Mr. Barrow.</button> <!-- first choice -->
 			<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
 				<div>
 					<a onclick="location.href='#close'" title="" class="close">x</a> <!-- close button of popup -->
@@ -167,14 +192,24 @@
 			</div>
 	</p>
 	<p class="black">
-		<button disabled="disabled" id="exit" class="linkbutton" onclick="location.href='bar.html'">• I think I am done here.</button> <!-- exit choice -->
+		<button disabled="disabled" id="exit" class="linkbutton" onclick="location.href='#openModal6'; choices();">• I think I am done here.</button> <!-- exit choice -->
+			<div id="openModal6" class="modalDialog6">
+				<div>
+					<p id="option1"/>
+					<p id="option2"/>
+					<p id="option3"/>
+					<p id="option4"/>
+				</div>
+			</div>
 	</p>
-	<a id="river" href="river.html"></a> <!-- link used as save -->
+	<a id="river" href="river.html" title="true" ></a> <!-- link used as save -->
 </fieldset>
 </body>
 <script type="text/javascript">
-		var url = document.getElementById('river'); // store the current url for future load
+		var url = document.getElementById('river'); // store the current url and value for future load 
 		localStorage.setItem('save', url);
+		var urlval = document.getElementById('river').title;
+		localStorage.setItem('urlval', urlval);
 		function check1(){
 		if(getCookie("worker")=="true"){ //checks for cookie, if exists name/value keep button disable status
 			document.getElementById('worker').disabled=true;

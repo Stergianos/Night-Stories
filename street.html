@@ -1,39 +1,92 @@
 <!DOCTYPE HTML>
-<html lang="en-US">
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
 	<meta charset="UTF-8">
 	<title>Street</title>
 	<link rel = "stylesheet"
 		  type = "text/css"
-		  href = "mainTexts.css"
-	/>
+		  href = "css/street.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">
+		function button1(){
+			var b1 = document.getElementById('police').value;
+			localStorage.setItem("button1", b1);
+		}
+		function button2(){
+			var b2 = document.getElementById('bar').value;
+			localStorage.setItem("button2", b2);
+		}
+		function button3(){
+			var b3 = document.getElementById('river').value;
+			localStorage.setItem("button3", b3);
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+	</script>
 </head>
-<body>
-	<p>
-		The skies have opened up once again pouring heavy rain. A few steps away, you recognize
-		the figure of a car. That's a nice car you don't see every day in this neighbourhood.
-		<br/>
-		<br/>
-		The drivers window lowers and a trembled voice speaks to you.<br/>
-		Client: " Ehmm... you.. you were late. "<br/>
-		Detective: " With heavy rain is not easy to go on foot. "<br/>
-		Client: " Anyway... Anyway... I think it was a murder! "<br/>
-		Detective: " Well, who murdered who? "<br/>
-		Client: " The death of my father! "<br/>
-		Detective: " And...? "<br/>
-		Client: " Isn't that obvious? You have to investigate the case! "
-		<br/>
-		<br/>
-		The hand of the young man with a stuffed envelope comes out of the window.<br/>
-		Client: " Take these money in advance. "<br/>
-		It's been a long time since you saw so much money.<br/>
-		Client: " Tomorrow at 6 p.m. we meet in my mansion? St. Charles Avenue 12, Garden District. "
-		<br/>
-		<br/>
-		<br/>
-		<a type="button" onclick="location.href='streetart1.html'">• 6 p.m. it is then.</a>
-		<br/>
-		<a href = "streetart2.html">• Let me make a small search first. I have my ways, trust me!</a>
+<body onLoad="nobackforw();" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<p class="white">
+	The skies have opened up once again pouring heavy rain. A few steps away you recognize the figure of a car. That's a nice car you don't 
+	see every day in this neighbourhood.<br/>
+	The drivers' window lowers and a trembled voice speaks to you.<br/>
+	Client: "Ehm... you were late."<br/>
+	Detective: "With heavy rain it's not easy to go on foot."<br/>
+	Client: "Anyway... I told you on the phone, I think it was a murder!"<br/>
+	Detective: "It was all over the press this morning. He was your father. Am I right Mr. Jean Barrow?"<br/>
+	Jean Barrow: "Yes, yes... You have to learn what really happened. I don't trust the police saying it was suicide"<br/>
+	The hand of the young man with a stuffed envelope comes out of the window.<br/>
+	Jean Barrow: "Take this money in advance. Tomorrow at 9 a.m. we meet in my mansion? St. Charles Avenue 12, Garden District. Well
+	as you already know, discretion is the key and lets say it's better to avoid visiting the factory. It's best we avoid being seen together
+	as much as possible."<br/>
+	As you grasp the envelope you slightly nod and within a few seconds you are alone looking the gloomy sky, thinking your next move.
 	</p>
+	<p class="black">
+		<button type="button" id="police" class="linkbutton" value="1" onclick="location.href='http://www.google.com'; button1();">• Head to the Police Station.</button>
+	</p>
+	<p class="black">
+		<button type="button" id="bar" class="linkbutton" value="2" onclick="location.href='bar.html'; button2();">• Tonight it's my night. Hit the fancy bar you always wanted to!</button>
+	</p>
+	<p class="black">
+		<button type="button" id="river" class="linkbutton" value="3" onclick="location.href='#openModal'; button3();">• Think of places connected to the father, Alexander Barrow and start the investigation there.</button>
+			<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
+				<div>
+					<p>
+						Apparently, there is the factory but it's off limits at the moment. As I recall there were two clothing industries but this time
+						are most certain closed. Only one place remains, the "Mississippi Express" at the river.
+						<br/>
+						<br/>
+						<button class="linkbutton" style="color:black;" onclick="location.href='river.html'">• It's gonna be an interesting night
+						compared to the boring ones I had for a long time now!</button>
+					</p>
+				</div>
+			</div>
+	</p>
+	<a id="street" href="street.html" value="true"></a> <!-- link used as save -->
+</fieldset>
 </body>
+<script type="text/javascript">
+		var url = document.getElementById('street'); // store the current url for future load
+		localStorage.setItem('save', url);
+</script>
 </html>
