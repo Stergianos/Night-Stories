@@ -15,25 +15,25 @@
 			document.cookie=name+"="+value;
 		}
 		function getCookie( check_name ) {
-		var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
-		var a_temp_cookie = '';
-		var cookie_name = '';
-		var cookie_value = '';
-		var b_cookie_found = false; 
-			for ( i = 0; i < a_all_cookies.length; i++ ){ 
-				a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
-				cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
-					if ( cookie_name == check_name ){ //check cookie
-						b_cookie_found = true;
-							if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
 								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
-							}
-					return cookie_value;
-					break;
-					}	
-			a_temp_cookie = null;
-			cookie_name = '';
-			}
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
 			if ( !b_cookie_found ){
 				return null;
 			}
@@ -64,8 +64,8 @@
 			document.getElementById('foreman').disabled=true;
 		}
 		function enable(){ // enable exit from scene choice when all other choices are clicked
-		var bt1 = document.getElementById('worker');
-		var bt2 = document.getElementById('foreman');
+			var bt1 = document.getElementById('worker');
+			var bt2 = document.getElementById('foreman');
 			if (bt1.disabled==true && bt2.disabled==true){
 				document.getElementById('exit').disabled=false;
 			}
@@ -110,15 +110,15 @@
 				document.getElementById('option4').innerHTML = "mpourdes vol.2" + '<button type="button" class="linkbutton" style="color:black; onclick="gotonext()"">• Mansion</button>';
 			}
 		}
-		//<!-- global attributes used by the external js file -->
+		// global attributes used by the external js file
 		var resist = 2;
 		var attribute = localStorage.getItem("social");
 		var skill = localStorage.getItem("lies");
 		var total = parseInt(attribute, 10) + parseInt(skill, 10);
 	</script>
-	<script src="dice.js"></script> <!-- call external js file -->
+	<script src="scripts/dice.js"></script> <!-- call external js file -->
 </head>
-<body onLoad="nobackforw(); check1(); check2(); enable();" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+<body onLoad="nobackforw(); check1(); check2(); enable()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
 	<p class="white">
 	The rain has stopped minutes ago but the wind keeps blowing. Humidity found the chance to become a layer of thick fog.
@@ -184,11 +184,9 @@
 				<div>
 					<a onclick="location.href='#close5';" title="" class="close">x</a>
 					<p>
-						<p id="results"></p> <!-- paragraphs for the innerHTML -->
-						<p id="results2"></p>
-						<p id="answers">
-						
-						</p>
+						<p id="results"/> <!-- paragraphs for the innerHTML -->
+						<p id="results2"/>
+						<p id="answers"/>
 					</p>
 				</div>
 			</div>
@@ -197,10 +195,10 @@
 		<button disabled="disabled" id="exit" class="linkbutton" onclick="location.href='#openModal6'; choices();">• I think I am done here.</button> <!-- exit choice -->
 			<div id="openModal6" class="modalDialog6">
 				<div>
-					<p id="option1"></p>
-					<p id="option2"></p>
-					<p id="option3"></p>
-					<p id="option4"></p>
+					<p id="option1"/>
+					<p id="option2"/>
+					<p id="option3"/>
+					<p id="option4"/>
 				</div>
 			</div>
 	</p>
@@ -208,19 +206,19 @@
 </fieldset>
 </body>
 <script type="text/javascript">
-		var url = document.getElementById('river'); // store the current url and value for future load 
-		localStorage.setItem('save', url);
-		var urlval = document.getElementById('river').title;
-		localStorage.setItem('urlval', urlval);
-		function check1(){
+	var url = document.getElementById('river'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('river').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
 		if(getCookie("worker")=="true"){ //checks for cookie, if exists name/value keep button disable status
 			document.getElementById('worker').disabled=true;
 		}
-		}
-		function check2(){
+	}
+	function check2(){
 		if(getCookie("foreman")=="true"){
 			document.getElementById('foreman').disabled=true;
 		}	
-		}
+	}
 </script>
 </html>

@@ -2,36 +2,44 @@
 <html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
 	<meta charset="UTF-8">
-	<title>Prologue</title>
+	<title>Bourbon</title>
 	<link rel = "stylesheet"
 		  type = "text/css"
-		  href = "css/prelude.css"/>
+		  href = "css/bottle.css"/>
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<script type="text/javascript">
+	<script type="text/javascript">	
 		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
 		function nobackforw(){
 			window.history.forward();
 			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
 		}
 		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
 		// keycode for backspace
 			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
 				return false;
 			}
 		}
 		function redirect(){
 			window.setTimeout(function(){ // redirect to next page after 3 seconds
-				window.location.href='diary1.html';
-			}, 3000);
+				window.location.href='street.html';
+			}, 2000);
 		}
 	</script>
 </head>
-<body onload="redirect()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+<body onLoad="redirect()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
 	<span>
-	PROLOGUE
+	Pouring bourbon into glass...
 	</span>
 </body>
 </html>

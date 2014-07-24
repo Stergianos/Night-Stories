@@ -107,8 +107,8 @@ fieldset {
 	box-shadow: 1px 1px 3px #000;
 }
 .close:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }
 .modalDialog2 { 
 	position: fixed;
@@ -162,8 +162,8 @@ cursor:pointer;
 	box-shadow: 1px 1px 3px #000;
 }
 .close2:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }
 .modalDialog3{ 
 	position: fixed;
@@ -217,8 +217,8 @@ cursor:pointer;
 	box-shadow: 1px 1px 3px #000;
 }
 .close3:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }
 .modalDialog4{ 
 	position: fixed;
@@ -272,8 +272,8 @@ cursor:pointer;
 	box-shadow: 1px 1px 3px #000;
 }
 .close4:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }
 .modalDialog5{ 
 	position: fixed;
@@ -327,8 +327,8 @@ cursor:pointer;
 	box-shadow: 1px 1px 3px #000;
 }
 .close5:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }
 .modalDialog6{ 
 	position: fixed;
@@ -382,6 +382,6 @@ cursor:pointer;
 	box-shadow: 1px 1px 3px #000;
 }
 .close6:hover { 
-background: red; 
-cursor:pointer;
+	background: red; 
+	cursor:pointer;
 }

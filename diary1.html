@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Diary Entry</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/diary.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script src="scripts/mute.js"></script>
+	<script type="text/javascript">
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function play(){ // for playing audio and redirecting after
+			var bourbon = document.getElementById('bottle');
+				if (bourbon.muted === true){
+					window.location.href='bottle.html';
+				}
+				else{
+					bourbon.play();
+					setTimeout( function(){window.location.href='street.html';}, 6000);
+				}
+		}
+	</script>
+</head>
+<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+	<audio id="diary" hidden = "hidden" preload autoplay>
+		<source src = "sounds/diary.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/diary.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<audio id="bottle" hidden="hidden" preload>
+		<source src = "sounds/bottle.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/bottle.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<br/>
+	<h4> New Orleans, November 12<sup>th</sup> 1951</h4>
+	<br/>
+	<p>
+		My dear diary... bah... I am too old for this shit! Same shitty bourbon, same shitty neighbourhood.
+		All those things consist one more of my "normal" nights, and life goes on and on.
+		<br/>
+		<br/>
+		Well, you know... New Orleans is not the city you want to be those days. Most jobs in the port and
+		the construction department are almost dead. The city is in deep economic crisis and as if all
+		these were not enough, I have to stand this damn rain day after day.
+		<br/>
+		<br/>
+		To be a detective was not like I imagined it when I was green. Catching bad guys and stuff...
+		Childish thoughts. At least I have a case now...
+	</p>
+	<span></span>
+	<p>
+		<button type="button" class="linkbutton" onclick="location.href='street.html'">• Walk down the street.</button>
+	<br/>
+		<button type="button" class="linkbutton" onclick="play();">• More bourbon on the rocks!</button>		
+	</p>
+</body>
+</html>

@@ -63,11 +63,13 @@ tr.spacedown > td{
 	display: inline-block; 
 	margin-left:50%;
 	margin-right:50%;
+	
+	
 }
 .links{ 
 	cursor: pointer;
 }
-.links:active{
+a:active{
 	background-color:black;
 }
 .linkbutton{ /*make button appear like a link*/

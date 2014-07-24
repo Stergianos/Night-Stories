@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en-US">
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
 	<meta charset="UTF-8">
 	<title>Character Sheet</title>
@@ -11,7 +11,18 @@
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript">
-	//<!-- count total points of attributes and skills and save on local storage -->
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		document.onkeydown = function(e) {
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		}
+	    // count total points of attributes and skills and save on local storage 
 		function phys(ph, ph1, ph2, ph3, ph4){
 		var ph = 0;
 		var ph1 = document.getElementById('Physical1').checked;
@@ -144,7 +155,7 @@
 			}
 		localStorage.setItem("intimidation",intm);
 		}
-		function check(che,che2,che3,che4){ //<!-- restrictions of order of points -->
+		function check(che,che2,che3,che4){ // restrictions of order of points 
 		var che = document.getElementById('Physical1').checked;
 		var che2 = document.getElementById('Physical2').checked;
 		var che3 = document.getElementById('Physical3').checked;
@@ -243,7 +254,7 @@
 				document.getElementById('Social4').checked=false;
 			}
 		}
-		function limitat(i){ //<!--restriction for total attribute points-->
+		function limitat(i){ // restriction for total attribute points 
 		var count = 0;
 			for (var i=0; i<document.getElementsByName('attribute').length; i++){
 				if (document.getElementsByName('attribute')[i].checked){
@@ -265,7 +276,7 @@
 				}
 			}
 		}
-		function limitsk(i){ //<!--restriction for total skill points-->
+		function limitsk(i){ // restriction for total skill points 
 		var count = 0;
 			for (var i=0; i<document.getElementsByName('skill').length; i++){
 				if (document.getElementsByName('skill')[i].checked){
@@ -284,7 +295,7 @@
 				}
 			}
 		}
-		function enable(i){ //<!--enable all checkboxes after reset -->
+		function enable(i){ // enable all checkboxes after reset 
 			for (var i=0; i<document.getElementsByName('attribute').length; i++){
 				if (document.getElementsByName('attribute')[i].disabled=true){
 					document.getElementsByName('attribute')[i].disabled=false;
@@ -296,7 +307,7 @@
 				}
 			}
 		}
-		function done(){ //<!-- enable submit button when 11 points are assigned -->
+		function done(){ // enable submit button when 11 points are assigned 
 		var count = 0;
 		document.getElementById('finish').disabled = true;
 			for (i=0; i<document.getElementsByTagName('input').length; i++){
@@ -308,18 +319,35 @@
 				document.getElementById('finish').disabled = false;
 			}
 		}
+		function play(){ // sound of buttons
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			var create = document.getElementById('character');
+			setTimeout( function(){character.submit();}, 300);
+		}
+		function play2(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+		}
 	</script>
+	<script src="scripts/mute.js"></script>
 </head>
-<body> 
+<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->> 
+	<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
 	<h1>
 		CHARACTER SHEET
 	</h1>
 	<h2>ATTRIBUTES</h2>
-	<h4> You can use up to 7 attributes points!</h4>
+	<h4> You can use 7 attributes points!</h4>
 	<p>
-	<form name="character" id="character" method="post" action='river.html'>
+	<form name="character" id="character" method="post" onsubmit="play()" action="prologue.html">
 		<table align="center">
-		<tr>
+		<tr> <!-- creation of attribute table -->
 		<td>Physical</td>
 		<td>
 			<div class="circle">
@@ -402,10 +430,10 @@
 		</table>
 	</p>
 	<h2>SKILLS</h2>
-	<h4>You can use up to 4 skill points!</h4>
+	<h4>You can use 4 skill points!</h4>
 	<p>
 		<table align="center">
-		<tr>
+		<tr> <!-- creation of skills table -->
 		<td>Lockpicking</td>
 		<td>
 			<div class="circle">
@@ -480,10 +508,10 @@
 	<table align="center">
 		<tr>
 		<td>
-			<input id="Reset" type="reset" class="linkbutton" value="Reset" onclick="enable()"/>
+			<input id="Reset" type="reset" class="linkbutton" onclick="enable(); play2()" value="&nbsp;&nbsp;Reset&nbsp;&nbsp;"/>
 		</td>
 		<td>
-			<input id="finish" type="submit" class="linkbutton" disabled="disabled" onclick="(function(){ phys(); menta(); soc(); lock(); stlth(); pist(); run(); invest(); secl(); pers(); lie(); intim();})();" value="Finish" />
+			<input id="finish" type="button" class="linkbutton" disabled="disabled" onclick="(function(){ play(); phys(); menta(); soc(); lock(); stlth(); pist(); run(); invest(); secl(); pers(); lie(); intim();})();" value="&nbsp;&nbsp;Finish&nbsp;&nbsp;"/>
 		</td>
 		</tr>
 	</table>
