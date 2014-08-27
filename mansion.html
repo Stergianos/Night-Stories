@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Mansion</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/mansion.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('investigate').disabled=true;
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		var resist = 4; // global attributes used by the external js file
+		var attribute = localStorage.getItem("mental");
+		var skill = localStorage.getItem("investigation");
+		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); check1(); check2(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	A long night has passed and with my "hunting" instincts ablaze after a deep hibernation, I find myself a few steps away from
+	the main entrance of Jean's Barrow mansion.<br/>
+	Two mugs of coffee and yet I can't get myself together.<br/>
+	A two floor stone colonial house, I am not an art history expert but I think it's Victorian architecture. I bet, if I was a
+	rich spoiled boy I would love every bit of it. The scenery is completed by a big garden full of flowers and trimmed bushes...
+	My finger is already on the ring-bell.<br/>
+	Detective: And now we wait.<br/>
+	A middle age black man, well dressed even for a servant, opens the door and welcomes me. He escorts me towards the house and then
+	inside the living room. We both walk all the way in a deep dead silence, walking in a slow pace, it's almost psychedelic.<br/>
+	Butler: Wait here please. Mr. Barrow will be here shortly.<br/>
+	I snap out of it, just staring at him without saying anything. That's when I realize that life hasn't been easy on him, maybe
+	not even fair. He turns his back, walks away and I left alone waiting.<br/>
+	I take a look around and see nothing more than expected. Complex curved furniture and expensive decorations and then, in front
+	of me a collection of stuffed animals, somehow it gives me the chills. The voice of Jean Barrow behind me, surprises me.<br/>
+	Jean Barrow: Good morning. I appreciate it that you are on your time. Let's not waste time then. I called you over so you can check
+	on your own the death scene. Follow me please.<br/>
+	You walk through a corridor. The noise of your footsteps are absorbed by the thick red carpet, almost muted. You feel that the silence
+	in every part of this house is really strange. While reaching the end of the hallway a door awaits you and Jean Barrow gives his last
+	instructions.<br/>
+	Jean Barrow: Unfortunately, I can't stay any longer, I have to get ready for work, the factory has many responsibilities. Go on and check 
+	my fathers office, the place he left his last breath. I hope we have progress very soon (slightly opens the door). Until next time.<br/>
+	Detective: Have a good day Mr. Barrow.<br/>
+	I close the door behind me, isolating myself from the rest of the house. A big wooden desk filled with papers and folders. Next to it, a small
+	furniture with a radio on it and a couple half empty bottles of "liquid gold". To the other side, it's the library full of books, next to the
+	window. All and all a tidy room, perfectly organized that makes you wonder if this room was a death scene.
+	</p>
+	<p class="black">
+	<button type="button" id="investigate" class="linkbutton" onclick="location.href='#openModal'; disable(); setCookie('investigate', 'true');">• Enough sightseeing, lets get down to work.</button>
+	<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
+		<div>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal2'; roll(); finalresult();"></img>	
+			</p>
+		</div>
+	</div>
+	<div id="openModal2" class="modalDialog"> 
+		<div>
+		<script type="text/javascript">
+			function finalresult(){ // continue the story depending on success rate of dices 
+				var finalres = localStorage.getItem("final");
+				if (finalres == 1){
+					document.getElementById('answers').innerHTML = "After minutes of searching here and there, again and again, I" +
+																	" notice the edge of a paper hanging out, between two books on the library." +
+																	" I slip it out and I realize that it was not a paper but a small cloth, almost covered" +
+																	" in wax." + '<br/>' + "Detective: What the hell..? (sigh) I am back at zero." + '<br/>' +
+																	"Still this is the only thing that someone may call a clue, so I am keeping it. One more" +
+																	" place to visit now";											
+				} 
+				else{
+					document.getElementById('answers').innerHTML = "Such a waste of time here. I found nothing. Maybe the police did a good job this time" +
+																	" and left nothing behind, but I've got another idea.";														
+				}	
+			}
+		</script>
+			<a onclick="location.href='#openModal3';" title="" class="close">x</a>
+			<p>
+			<p id="results"/> <!-- paragraphs for the innerHTML -->
+			<p id="results2"/>
+			<p id="answers"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled' , 'true');
+			</script>	
+		</div>
+	</div>
+	<div id="openModal3" class="modalDialog"> 
+		<div>
+			<p>
+			The butler is leading me out, through the big garden again. The guy who take cares of the garden, keeps staring 
+			at me. Even now that I am in the outer door, I still feel his eyes on me and I am pretty sure I don't know him at all.
+			<br/><br/>
+			<button type="button" id="exit" class="linkbutton" style="color:black" onclick="location.href='outfactory.html'">• About my last option.
+			I'm left only with the factory. I know what Barrow said but I can't work with the information I havee right now.</button>
+			</p>
+		</div>
+	</div>
+	</p>
+	<a id="mansion" href="mansion.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('mansion'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('mansion').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("rolled")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			finalresult();
+		}
+	}
+	function check2(){
+		if(getCookie("investigate")=="true"){
+			document.getElementById('investigate').disabled=true;
+		}	
+	}
+</script>
+</html>

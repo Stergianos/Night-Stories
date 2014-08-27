@@ -16,6 +16,7 @@
 			window.history.forward();
 			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
 		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
 		document.onkeydown = function(e) {
 		// keycode for backspace
 			if (e.keyCode === 8) {
@@ -332,13 +333,34 @@
 	</script>
 	<script src="scripts/mute.js"></script>
 </head>
-<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->> 
+<body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->> 
 	<audio id="clickme" hidden = "hidden" preload>
 		<source src = "sounds/click.ogg"
 				type = "audio/ogg"/>
 		<source src = "sounds/click.mp3"
 				type = "audio/mp3"/>
 	</audio>
+	<a class="links"  type="button" onclick="location.href='#openModal'"><img src="images/help.png" class="imagehelp"/></a>
+			<div id="openModal" class="modalDialog">
+				<div>
+					<a onclick="location.href='#close'" title="" class="close">x</a>
+					<p>
+					<center><strong>Attributes and Skills Explanation</strong></center><br/><br/>
+					Physical attribute: <br/>
+					Mental attribute:<br/>
+					Social attribute:<br/><br/>
+					Lockpicking skill:<br/>
+					Running skill:<br/>
+					Persuation skill:<br/>
+					Stealth skill:<br/>
+					Investigation skill:<br/>
+					Lies skill:<br/>
+					Pistol skill:<br/>
+					Second Language skill:<br/>
+					Intimidation skill:
+					</p>
+				</div>
+			</div>
 	<h1>
 		CHARACTER SHEET
 	</h1>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Louise</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/louise.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('conversation').disabled=true;
+		}
+	</script>
+</head>
+<body onLoad="check1(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<p class="white">
+	With the information I got, the first person I pictured on my mind was Louise. A quick stop to Louise's house before going to Jean Barrow. I knock the
+	door two, three times and finally she opens. She is beautiful as always, wearing a lingerie but her words are sharp, makes me feel like crashing on a wall
+	with 62mph.</br>
+	Louise: What you want here?
+	</p>
+	<p class="black">
+	<button type="button" id="conversation" class="linkbutton" onclick="location.href='#openModal'; disable(); setCookie('conversation', 'true')">• I know it
+	all Louise, Barrow family has depths and probably unfinished bushiness with the mob. Also, we both know you are involved in sexual scandals, later used
+	by the mob to manipulate certain people. Talk now and I promise I'll keep you out of this shit.</button>
+	<div id="openModal" class="modalDialog">
+		<div>
+			<p>
+			Louise: Trust me, I haven't involved the mob here. I was for my own.</br>
+			Somehow I believe her, the words coming out of her mouth are so genuine.</br>
+			Detective: I think I can believe you this time and put something on, you may catch a cold.</br>
+			I walk away from this woman. It's too "dangerous" to be alone with her for too much...</br>
+			Louise: Bye baby.</br>
+			Her goodbye echoed in my ears until I turned left.</br></br>
+			<button type="button" id="exit" style="color:black;"class="linkbutton" onclick="location.href='footchase.html'">• Barrow, your turn now!</button>
+			</p>
+		</div>
+	</div>
+	</p>
+	<a id="louise" href="louise.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('louise'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('louise').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("conversation")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('conversation').disabled=true;
+		}
+	}
+</script>
+</html>

@@ -2,10 +2,10 @@
 <html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
 	<meta charset="UTF-8">
-	<title>Diary Entry</title>
+	<title>Diary</title>
 	<link rel = "stylesheet"
 		  type = "text/css"
-		  href = "css/diaryprol.css"/>
+		  href = "css/diary.css"/>
 	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
@@ -25,16 +25,6 @@
 				return false;
 			}
 		}
-		function play(){ // for playing audio and redirecting after
-			var bourbon = document.getElementById('bottle');
-				if (bourbon.muted === true){
-					window.location.href='bottle.html';
-				}
-				else{
-					bourbon.play();
-					setTimeout( function(){window.location.href='chapter1.html';}, 6000);
-				}
-		}
 	</script>
 </head>
 <body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
@@ -44,34 +34,27 @@
 		<source src = "sounds/diary.mp3"
 				type = "audio/mp3"/>
 	</audio>
-	<audio id="bottle" hidden="hidden" preload>
-		<source src = "sounds/bottle.ogg"
-				type = "audio/ogg"/>
-		<source src = "sounds/bottle.mp3"
-				type = "audio/mp3"/>
-	</audio>
 	<br/>
-	<h4> New Orleans, November 12<sup>th</sup> 1951</h4>
+	<h4> New Orleans, November 16<sup>th</sup> 1951</h4>
 	<br/>
 	<p>
-		My dear diary... bah... I am too old for this shit! Same shitty bourbon, same shitty neighbourhood.
-		All those things consist one more of my "normal" nights, and life goes on and on.
-		<br/>
-		<br/>
-		Well, you know... New Orleans is not the city you want to be those days. Most jobs in the port and
-		the construction department are almost dead. The city is in deep economic crisis and as if all
-		these were not enough, I have to stand this damn rain day after day.
-		<br/>
-		<br/>
-		To be a detective was not like I imagined it when I was green. Catching bad guys and stuff...
-		Childish thoughts. At least I have a case now...
-	</p>
-	<br/>
-	<p>
-		<button type="button" class="linkbutton" onclick="location.href='chapter1.html'">• Walk down the street.</button>
-	</p>
-	<p>
-		<button type="button" class="linkbutton" onclick="play();">• More bourbon on the rocks!</button>		
-	</p>
+		I am like a stray dog chasing car wheels. I just do it and don't know what I am expecting in return, probably nothing.</br></br>
+		The two clothing industries in town had nothing more to add to the case, so the lead infos are close to zero. There is something I miss in the whole
+		picture or something is kept hidden from me, but I can't work like this.</br></br>
+		It's like someone is playing with me. Fuck, it's getting on my nerves.</br></br>
+		Anyway, I ought it to myself to try harder, a case is a case and I need those money but first Barrow needs to answer a few questions. Tomorrow night
+		I'll go to that creepy silent mansion.</br></br>
+		<script type="text/javascript">
+			function next(){
+				var mafia = localStorage.getItem("mafiaFiles");
+				if (mafia == 1){
+					window.location.href='louise.html';
+				}
+				else{
+					window.location.href='footchase.html';
+				}
+			}
+		</script>
+	<a class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a></p>
 </body>
 </html>

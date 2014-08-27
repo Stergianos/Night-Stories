@@ -1,0 +1,14 @@
+body{ /*fit for any resolution and unselectable*/
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	-webkit-user-select: none;      
+	-moz-user-select: none; 
+	-ms-user-select: none;
+}
+a{
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}

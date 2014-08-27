@@ -8,58 +8,34 @@
 @media (min-width:1366px) { body {font-size:1.9rem;} }
 @media (min-width:1440px) { body {font-size:2.1rem;} }
 @media (min-width:1680px) { body {font-size:2.3rem;} }
+html { 
+	font-size:100%;	/*best for responsive*/
+	background-color: black; /*unselectable*/
+	-webkit-user-select: none;      
+	-moz-user-select: none; 
+	-ms-user-select: none;
+}
 @font-face{ /*enter own txt-font*/
 	font-family: "Gill Sans Hel";
 	src: url('Gill Sans Hel.otf');
 }
-@font-face{ /*enter own txt-font*/
-	font-family: "Gill Sans Hel-Light";
-	src: url('Gill Sans Hel-Light.otf');
-}
-html { 
-	font-size:100%;	/*best for responsive*/
-} 
-body { 
-	background: black;
-	-webkit-user-select: none; /*unselectable*/      
-	-moz-user-select: none; 
-	-ms-user-select: none; 
-}
-h1 {
-	font-family: "Gill Sans Hel-Light";
-	position: relative;
-	text-align: center;
-	color: white;
-	cursor: default;
-}
-h2 {
-	font-family: "Gill Sans Hel-Light";
-	position: relative;
-	text-align: center;
-	color: white;
-	cursor: default;
-}
-h4 {
-	font-family: "Gill Sans Hel-Light";
-	position: relative;
-	text-align: center;
-	color: white;
-	cursor: default;
-}
-td {
+p {
 	font-family: "Gill Sans Hel";
-	color: white;
-	padding: 10px;
-	vertical-align:top;
-	padding-bottom: 3.7%;
+	text-align: justify; 
+	text-justify: inter-word;
+	padding-left: 7px;
+	padding-right: 7px;
+	font-size: 100%;
 	cursor: default;
 }
-input[type=checkbox] { /* hides the real checkbox so we can see only the label*/
-	visibility: hidden;
+fieldset {   
+  -moz-border-radius:5px;  
+  border-radius: 5px;  
+  -webkit-border-radius: 15px; 
 }
 .linkbutton{ /*make button appear like a link*/
 	background:none!important;
-	border: solid 2px; 
+	border:none; 
 	padding:0!important;
 	font-family: "Gill Sans Hel";
 	color: white;
@@ -67,48 +43,17 @@ input[type=checkbox] { /* hides the real checkbox so we can see only the label*/
 	outline:none;
 	outline-offset: 0;
 	cursor: pointer;
-	text-align: center;
-	-webkit-transition: all 0.1s;
-	-moz-transition: all 0.1s;
-	transition: all 0.1s;	
-}
-.linkbutton:active{
-	position:relative;
-	top: 3px;
+	text-align: justify; 
+	text-justify: inter-word;
 }
 .linkbutton:disabled{
 	color:grey;
 }
-.circle { /*create image to cover the checkboxes*/
-	width:5px;
-	height:5px;
-	background: black;
-	border-radius:100%;
-	position: relative;
+.white{
+	color: white;
 }
-.circle label{ /*put a label over the image*/
-	display: block;
-	width:20px;
-	height:20px;
-	border-radius:50%;
-	cursor: pointer;
-	position: absolute;
-	top: 0%;
-	left: 15%;
-	z-index: 1;
-	-webkit-transition: all .5s ease;
-	-moz-transition: all .5s ease;
-	-o-transition: all .5s ease;
-	-ms-transition: all .5s ease;
-	transition: all .5s ease;
-	background: grey;
-	-webkit-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-	-moz-box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-	box-shadow:inset 0px 1px 3px rgba(0,0,0,0.5);
-	overflow: hidden;
-}
-.circle input[type=checkbox]:checked+label {
-	background: red;
+.black{
+	color: black;
 }
 .modalDialog { /*creation of modal box*/
 	position: fixed;
@@ -166,13 +111,4 @@ input[type=checkbox] { /* hides the real checkbox so we can see only the label*/
 .close:hover { 
 	background: red; 
 	cursor:pointer;
-}
-.links{ 
-	cursor: pointer;
-}
-.imagehelp{
-	width: 9%;
-	position:absolute;
-	right: 1%;
-	top: 1%;
 }

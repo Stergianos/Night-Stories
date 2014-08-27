@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Factory II</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/infactory.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('offices').disabled=true;
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		function modal(){ 
+			window.location.href='infactory.html#openModal3';
+		}
+		var resist = 2;
+		var attribute = localStorage.getItem("mental");
+		var skill = localStorage.getItem("investigation");
+		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+		var resist2 = 2;
+		var attribute2 = localStorage.getItem("physical");
+		var skill2 = localStorage.getItem("lockpicking");
+		var total2 = parseInt(attribute2, 10) + parseInt(skill2, 10);
+	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); check1(); check2(); check3(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	The fumes of bleach and dried dye is heavy in the atmosphere. In the distance you hear voices, maybe not all of the workers are gone, therefore you
+	decide to stay hidden and wait. When you are sure you are left alone you go upstairs using a metallic ladder. All the offices are on the 2nd floor,
+	silent and dark, only a dim light enters through the windows signifying the end of the day.
+	</p>
+	<p class="black">
+	<button type="button" id="offices" class="linkbutton" onclick="location.href='#openModal'; disable(); setCookie('offices', 'true');">• Search those rooms
+	thoroughly.</button>
+	<div id="openModal" class="modalDialog">
+		<div>
+		<script type="text/javascript">
+			function finalresult(){ // continue the story depending on success rate of dices 
+				var finalres = localStorage.getItem("final");
+				if (finalres == 1){
+					document.getElementById('answers').innerHTML = "Luckily the doors are open and my job is easier. Looking at some logistic books with the minor"+
+																	" economic knowledge that I have, I can understand that Barrow is in a bad, really bad position."+'<br/><br/>' +
+																	'<button type="button" class="linkbutton" style="color:black;" onclick="modal()">• While I continue the investigation I come across the only locked drawer and it happens to be in Jeans Barrow office.</button>';
+				} 
+				else{
+					document.getElementById('answers').innerHTML = "Luckily the doors are open and my job is easier. Unfortunately I found nothing of interest"+'<br/><br/>' +
+																	'<button type="button" class="linkbutton" style="color:black;" onclick="modal()">• While I continue the investigation I come across the only locked drawer and it happens to be in Jeans Barrow office.</button>';
+				}	
+			}
+		</script>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal2'; roll(); finalresult();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal2" class="modalDialog">
+		<div>
+			<p>
+			<p id="results"/> <!-- paragraphs for the innerHTML -->
+			<p id="results2"/>
+			<p id="answers"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled' , 'true');
+			</script>
+		</div>
+	</div>
+	<div id="openModal3" class="modalDialog">
+		<div>
+		<script type="text/javascript">
+			function finalresult2(){ // continue the story depending on success rate of dices 
+				var finalres = localStorage.getItem("final");
+				if (finalres == 1){
+					document.getElementById('answers2').innerHTML = "After a few efforts and with some skills i learned on the streets, I manage to open the drawer."+'<br/>' +
+																	"Detective: (whispering) Oh man this is some serious shit. Owning money to the mafia is no game. Maybe it was a murder after all." 
+					var files = 1;
+					localStorage.setItem("mafiaFiles",files);
+				} 
+				else{
+					document.getElementById('answers2').innerHTML = "(craching sound) "+'<br/>'+ "Detective: Damn!" + '</br>' + "The shattered lockpicking tools fall in front of you and you gather them fairly dissapointed."												
+				}	
+			}
+		</script>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice2" onclick="play(); location.href='#openModal4'; roll2(); finalresult2();"></img>	
+			</p>
+		</div>
+	</div>
+	<div id="openModal4" class="modalDialog">
+		<div>
+			<a id="close4" onclick="location.href='#openModal5'" title="" class="close">x</a> 
+			<p>
+			<p id="results3"/> <!-- paragraphs for the innerHTML -->
+			<p id="results4"/>
+			<p id="answers2"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled2' , 'true');
+			</script>
+		</div>
+	</div>
+	<div id="openModal5" class="modalDialog">
+		<div>
+			<p>
+			You notice a flash light's light - probably the guard - and you know it's time to get out of there.</br></br>
+			<button type="button" id="exit" class="linkbutton" style="color:black;" onclick="location.href='diary2.html'">• I need to clear a bit the situation, some people need to answer a few questions.</button>
+			</p>
+		</div>
+	</div>
+	</p>
+	<a id="infactory" href="infactory.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('infactory'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('infactory').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("offices")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('offices').disabled=true;
+		}
+	}
+	function check2(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+	function check3(){
+		if(getCookie("rolled2")=="true"){
+			finalresult2();
+		}
+	}
+</script>
+</html>

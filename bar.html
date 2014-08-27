@@ -1,35 +1,451 @@
 <!DOCTYPE HTML>
-<html lang="en-US">
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
 <head>	
 	<meta charset="UTF-8">
 	<title>Bar</title>
 	<link rel = "stylesheet"
 		  type = "text/css"
-		  href = "mainTexts.css"/>
+		  href = "css/bar.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="Content-Script-Type" content="text/javascript">
-	
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	<script type="text/javascript" src="dice.js">
-
-	</script> 
-
-</head>
-<body>
-	<p>
-	Louise: "Is this a way to treat a lady?"</br></br>
-	<a href = "street.html">
-		<img src = " arrow.png " />
-	</a>
-	<button class="tests" onclick="testskills()"> * gergergerg</button>
-	<button type="button" onclick="roll()">
-	</p>
-	<a id="bar" href="bar.html"></a> <!-- link used as save -->
-	<script>
-	var url = document.getElementById('bar');
-		localStorage.setItem('save', url);
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('barman').disabled=true;
+		}
+		function disable2(){
+			document.getElementById('drinks').disabled=true;
+			document.getElementById('barman').disabled=true;
+			document.getElementById('look').disabled=true;
+		}
+		function disable3(){ 
+			document.getElementById('look').disabled=true;
+		}
+		function enable(){ // enable exit from scene choice when all other choices are clicked
+			var bt1 = document.getElementById('barman');
+			var bt2 = document.getElementById('drinks');
+			var bt3 = document.getElementById('look');
+			if (bt1.disabled==true && bt2.disabled==true && bt3.disabled==true){
+				document.getElementById('exit').disabled=false;
+			}
+		}
+		function gotoriver(){ // player choices left before next day starts
+			window.location.href='river.html';
+		}
+		function gotopolice(){
+			window.location.href='police.html';
+		}
+		function gotonext(){
+			window.location.href='mansion.html';
+		}
+		function modal(){ // modal boxes opened through innerHTML
+			window.location.href='bar.html#openModal6';
+		}
+		function modal2(){ 
+			window.location.href='bar.html#openModal10';
+		}
+		function modal3(){ 
+			window.location.href='bar.html#openModal11';
+		}
+		function modal4(){ 
+			window.location.href='bar.html#openModal13';
+		}
+		function modal5(){ 
+			window.location.href='bar.html#openModal14';
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		function button1(){ // save choices so user can visit the "unclicked" areas later
+			var b1 = document.getElementById('police').value;
+			localStorage.setItem("button1", b1);
+		}
+		function button3(){
+			var b3 = document.getElementById('river').value;
+			localStorage.setItem("button3", b3);
+		}
+		// global attributes used by the external js file
+		var resist = 1;
+		var attribute = localStorage.getItem("mental");
+		var total = parseInt(attribute, 10);
+		var resist2 = 2;
+		var attribute2 = localStorage.getItem("social");
+		var skill2 = localStorage.getItem("persuasion");
+		var total2 = parseInt(attribute2, 10) + parseInt(skill2, 10);
+		var resist3 = 1;
+		var attribute3 = localStorage.getItem("social");
+		var skill3 = localStorage.getItem("intimidation");
+		var total3 = parseInt(attribute3, 10) + parseInt(skill3, 10);
+		var resist4 = 2;
+		var attribute4 = localStorage.getItem("social");
+		var skill4 = localStorage.getItem("persuasion");
+		var total4 = parseInt(attribute4, 10) + parseInt(skill4, 10);
 	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); nobackforw(); check1(); check2(); check3(); check4(); check5(); check6(); check7(); check8(); enable()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="blues" hidden="hidden" preload autoplay> 
+		<source src = "sounds/blues.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/blues.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	"...Doctor said, 'Ain't the fever, that's your lover has another man', ta dada da da..."<br/>
+	Detective: Hah... My favourite song..!<br/>
+	The door opens wide and the song covers my whispering rhythm. The atmosphere is filled with intoxicating smells of fine 
+	cigars and rich flavoured scotch. The band on the stage tries its best to entertain the customers, people all rotten inside 
+	with expensive tuxedos and dresses just for the looks. Among all these, I find myself at the bar, enjoying the first drink
+	of the evening.
+	</p>
+	<p class="black">
+		<button type="button" id="barman" class="linkbutton" onclick="location.href='#openModal'; disable(); enable(); setCookie('barman', 'true');">• Well since I am here why not ask and see if I can learn what type 
+		of guy is Jean Barrow. Never hearts to know a little bit about your customers. I bet a rich man like him comes to places
+		like this. Oh, here's the barman.</button> <!-- first choice -->
+			<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
+				<div>
+					<a onclick="location.href='#close'" title="" class="close">x</a> <!-- close button of popup -->
+					<p>
+						Detective: I'm waiting for someone named Mr. Barrow, tall, brown-haired guy. We have a meeting here tonight.<br/>
+						Barman: Oh yeah, Mr. Barrow, easy going lad. He is a regular. Haven't seen him tonight but I'm sure he'll come if he
+						said so.<br/>
+						Detective: Good good, till then bring me one more.<br/>
+						Barman: Right up sir.
+					</p>
+				</div>
+			</div>
+	</p>
+	<p class="black"> <!-- second choice -->
+		<button type="button" id="drinks" class="linkbutton" onclick="location.href='#openModal2'; disable2(); enable(); setCookie('drinks', 'true')">• Barman said next one is on the house! Why say no?</button>
+			<div id="openModal2" class="modalDialog"> 
+				<div>
+					<a onclick="location.href='#close2'" title="" class="close">x</a> 
+					<p>
+						Apparently one was not enough to eliminate your thirst. You feeling really tipsy.
+					</p>
+				</div>
+			</div>
+	</p>
+	<p class="black"> <!-- third choice with possible conversation -->
+		<button type="button" id="look" class="linkbutton" onclick="location.href='#openModal4'; disable3(); enable(); setCookie('look', 'true')">• Take a better look around while drinking your scotch.</button>
+		<script type="text/javascript">
+			function finalresult(){ // continue the story depending on success rate of dices 
+				var finalres = localStorage.getItem("final");
+				if (finalres == 1){
+					document.getElementById('answers').innerHTML = "That red dress is surely revealing, after all every job has its proper outfit. Blonde, " +
+																	"curvy siluette but not far, with a sparkling look on her eyes. That can be no one "+
+																	"else but Louise."+'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal()">• Go and talk to her</button>';	
+				} 
+				else{
+					document.getElementById('answers').innerHTML = "The same scene like 20 minutes ago, nothing interesting";
+					document.getElementById('close5').style.visibility="visible";	
+				}	
+			}
+			function choices(){ //check available player path choices
+				var b1 = localStorage.getItem("button1");
+				var b3 = localStorage.getItem("button3");
+				if (b1 != "1" && b3 != "3"){
+					document.getElementById('option1').innerHTML = "Wish I had more time to relax." + '<br/><br/>' + '<button type="button" id="river" value="3" class="linkbutton" style="color:black;" onclick="gotoriver(); button3()">• If I remember corectly there is a transport buisness at the river side, owned by the Barrow family. This may not be a bad palce to start.</button>' +
+																	'<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• On my way to the police station.</button>';
+				}
+				if (b1 == "1" && b3 != "3"){
+					document.getElementById('option2').innerHTML = "One last stop for tonight and that must be the river-boat company of Alexander Barrow. The only buisness I can investigate this time of night." + '<br/><br/>' + '<button type="button" id="river" value="3" class="linkbutton" style="color:black;" onclick="gotoriver(); button3()">• Off I go then.</button>';
+				}
+				if (b1 != "1" && b3 == "3"){
+					document.getElementById('option3').innerHTML = "I am getting tired but I am not done yet." + '<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• Time to pay our Police Station a vitit.</button>';
+				}
+				if (b1 == "1" && b3 == "3"){
+					document.getElementById('option4').innerHTML = "Heading to home atlast!" + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotonext()">• Tomorrow is a new day and it starts from Jeans Barrow mansion. High society here I come!</button>';
+				}
+			}
+	</script>
+		<div id="openModal4" class="modalDialog">
+			<div>
+				<p>
+					<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal5'; roll(); finalresult();"></img>	
+				</p>
+			</div>
+		</div>
+		<div id="openModal5" class="modalDialog">
+			<div>
+				<a id="close5" onclick="location.href='#close5';" title="" style="visibility:hidden" class="close">x</a>
+				<p id="results"/> <!-- paragraphs for the innerHTML -->
+				<p id="results2"/>
+				<p id="answers"/>
+				<script type="text/javascript">
+					setCookie('rolled' , 'true');
+				</script>
+			</div>
+		</div>
+	</p>
+	<p class="black"> <!-- exit scene choice -->
+		<button type="button" id="exit" class="linkbutton" onclick="location.href='#openModal3'; choices()" disabled="disabled">• It was relaxing but it's time to go now.</button>
+			<div id="openModal3" class="modalDialog"> <!-- creation of the popup window -->
+				<div>
+					<p id="option1"/>
+					<p id="option2"/>
+					<p id="option3"/>
+					<p id="option4"/>
+					<script type="text/javascript">
+						setCookie('options' , 'true');
+					</script>
+				</div>
+			</div>
+	</p>
+	<div id="openModal6" class="modalDialog"> <!-- continue the third choice with the conversation -->
+		<div>
+			<p>
+			Louise: Well well, look who decided to pay us a visit! (cheeky smile). How you doing baby? In my defense
+			I've been a good girl all this time.<br/>
+			Detective: Let's cut the formalities. Straight forward question. You ever been with Barrow Junior?<br/>
+			Louise: Is this a way to treat a lady?<br/><br/>
+			<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal9'">• I treated a lady like a queen once and
+			I got nothing in return... So why bother?</button><br/><br/>
+			<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal9'">• Wish I had more spare time like you,
+			but I have other priorities.</button><br/><br/>
+			<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal7'">• A real lady always knows what is
+			best for her interest. What you say, wanna give it another shot?</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal7" class="modalDialog">
+		<div>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice2" onclick="play(); location.href='#openModal8'; roll2(); finalresult2();"></img>
+			</p>
+		</div>
+	</div>
+	<script type="text/javascript">
+		function finalresult2(){ // continue the story depending on success rate of dices 
+			var finalres = localStorage.getItem("final");
+			if (finalres == 1){
+				document.getElementById('answers2').innerHTML = "Louise: Hmm, I guess we had our moments. (wink)" + '<br/><br/>' +
+																'<button type="button" class="linkbutton" style="color:black;" onclick="modal4()">• Maybe, I am just saying, maybe' +
+																' you had any kind of relationship with his father?</button>' + '<br/><br/>' +
+																'<button type="button" class="linkbutton" style="color:black;" onclick="modal5()">• Come on, I know there must be' +
+																' some spicy details. Carring to share them with me?</button>';	
+			} 
+			else{
+				document.getElementById('answers2').innerHTML = "Louise: A real man always has tact when talking to a woman and as"
+																+ " I can see, you have none." + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal2()">• You have a big mouth for a low self-esteem,'
+																+ ' manipulated bitch. Oh, and trust me I know exactly what is going behind the scenes, so better start talking.</button>' + '<br/><br/>' +
+																'<button type="button" class="linkbutton" style="color:black;" onclick="modal3()">• Watch your tongue or else your little'
+																+ ' dirty secrets will be revealed to someone you do not want to mess with!</button>';	
+			}	
+		}
+	</script>
+	<div id="openModal8" class="modalDialog">
+		<div>
+			<p id="results3"/>
+			<p id="results4"/>
+			<p id="answers2"/>
+			<script type="text/javascript">
+				setCookie('rolled2' , 'true');
+			</script>
+		</div>
+	</div>
+	<div id="openModal9" class="modalDialog">
+		<div>
+			<p>
+			Louise: A real man always has tact when talking to a woman and as I can see, you have none.<br/><br/>
+			<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal10'">• You have a big mouth for a low self-esteem,
+			manipulated bitch. Oh, and trust me I know exactly what is going behind the scenes, so better start talking.</button><br/><br/>
+			<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal11'">• Watch your tongue or else your little
+			dirty secrets will be revealed to someone you don't want to mess with!</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal10" class="modalDialog">
+		<div>
+			<a id="close10" onclick="location.href='#close10';" title="" class="close">x</a>
+			<p>
+			Louise: Piss off or I have a better idea, I am out of here. Anyway, it was getting boring!<br/>
+			Detective: (mumble) You little...
+			</p>
+		</div>
+	</div>
+	<div id="openModal11" class="modalDialog">
+		<div>
+	<script type="text/javascript">
+		function finalresult3(){ // continue the story depending on success rate of dices 
+			var finalres = localStorage.getItem("final");
+			if (finalres == 1){
+				document.getElementById('answers3').innerHTML = "Louise: Ok just relax. I've slept with him a couple of times but I know" +
+																" nothing more. Please let me enjoy my drink now";	
+			} 
+			else{
+				document.getElementById('answers3').innerHTML = "Louise: Piss off or I have a better idea, I am out of here. Anyway, it was getting boring!" + '<br/>' +
+																"Detective: (mumble) You little...";
+			}
+		}
+	</script>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice3" onclick="play(); location.href='#openModal12'; roll3(); finalresult3();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal12" class="modalDialog">
+		<div>
+			<a id="close12" onclick="location.href='#close12';" title="" class="close">x</a>
+			<p id="results5"/>
+			<p id="results6"/>
+			<p id="answers3"/>
+			<script type="text/javascript">
+				setCookie('rolled3' , 'true');
+			</script>
+		</div>
+	</div>
+	<div id="openModal13" class="modalDialog">
+		<div>
+			<a id="close13" onclick="location.href='#close13';" title="" class="close">x</a>
+			<p>
+			Louise: Next time sweety, right now I think I' ll get down to work.<br/>
+			She passes in front of you, walking towards a middle-aged fat guy.<br/>
+			Detective: Till next time.
+			</p>
+		</div>
+	</div>
+	<div id="openModal14" class="modalDialog">
+		<div>
+	<script type="text/javascript">
+		function finalresult4(){ // continue the story depending on success rate of dices 
+			var finalres = localStorage.getItem("final");
+			if (finalres == 1){
+				document.getElementById('answers4').innerHTML = "Louise: Don't have much to tell since it didn't last long." +
+																" You see he has strange ways for fulfill his needs, even for me." +
+																" End of the line baby, I need to go now. She blowed a kiss and walked" +
+																" slowly - almost erotic - out of the bar";	
+			} 
+			else{
+				document.getElementById('answers4').innerHTML = "Louise: Next time sweety, right now I think I' ll get down to work." +
+																'<br/>' + "She passes in front of you, walking towards a middle-aged fat guy."
+																+ '<br/>' + "Detective: Till next time.";
+			}
+		}
+	</script>
+			<p>
+				<img class="dice" src="images/dice.png" id="rolldice4" onclick="play(); location.href='#openModal15'; roll4(); finalresult4();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal15" class="modalDialog">
+		<div>
+			<a id="close15" onclick="location.href='#close15';" title="" class="close">x</a>
+			<p id="results7"/>
+			<p id="results8"/>
+			<p id="answers4"/>
+			<script type="text/javascript">
+				setCookie('rolled4' , 'true');
+			</script>
+		</div>
+	</div>
+	<a id="bar" href="bar.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
 </body>
+<script type="text/javascript">
+	var url = document.getElementById('bar'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('bar').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("barman")=="true"){ //checks for cookie, if exists name/value keep button disable status
+			document.getElementById('barman').disabled=true;
+		}
+	}
+	function check2(){
+		if(getCookie("drinks")=="true"){ //checks for cookie, if exists name/value keep button disable status
+			document.getElementById('barman').disabled=true;
+			document.getElementById('drinks').disabled=true;
+			document.getElementById('look').disabled=true;
+		}
+	}
+	function check3(){
+		if(getCookie("look")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('look').disabled=true;
+		}
+	}
+	function check4(){
+		if(getCookie("options")=="true"){
+			choices();
+		}
+	}
+	function check5(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+	function check6(){
+		if(getCookie("rolled2")=="true"){
+			finalresult2();
+		}
+	}
+	function check7(){
+		if(getCookie("rolled3")=="true"){
+			finalresult3();
+		}
+	}
+	function check8(){
+		if(getCookie("rolled4")=="true"){
+			finalresult4();
+		}
+	}
+</script>
 </html>

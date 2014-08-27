@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Police</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/police.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">		
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('archive').disabled=true;
+		}
+		function disable2(){ 
+			document.getElementById('andrew').disabled=true;
+			document.getElementById('sergeant').disabled=true;
+		}
+		function enable(){ // enable exit from scene choice when all other choices are clicked
+			var bt1 = document.getElementById('archive');
+			var bt2 = document.getElementById('andrew');
+			var bt3 = document.getElementById('sergeant');
+			if (bt1.disabled==true && bt2.disabled==true && bt3.disabled==true){
+				document.getElementById('exit').disabled=false;
+			}
+		}
+		function gotobar(){ // player choices left before next day starts
+			window.location.href='bar.html';
+		}
+		function gotoriver(){
+			window.location.href='river.html';
+		}
+		function gotonext(){
+			window.location.href='mansion.html';
+		}
+		function button2(){ // save choices so user can visit the "unclicked" areas later
+			var b2 = document.getElementById('bar').value;
+			localStorage.setItem("button2", b2);
+		}
+		function button3(){
+			var b3 = document.getElementById('river').value;
+			localStorage.setItem("button3", b3);
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		var resist = 2;
+		var attribute = localStorage.getItem("social");
+		var skill = localStorage.getItem("lies");
+		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+		var resist2 = 1;
+		var attribute2 = localStorage.getItem("social");
+		var skill2 = localStorage.getItem("persuasion");
+		var total2 = parseInt(attribute2, 10) + parseInt(skill2, 10);
+	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); check1(); check2(); check3(); check4(); check5(); enable()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	Walking down the street I found myself in a well lighted neighbourhood, compared to others in NOLA, near the police station.
+	The building is a classic one, nothing interesting in particular. The interesting thing is the people inside that building.
+	Literally, you can find any type of character for any type of job... from the lawful policeman to the most scumbag cop. Let's
+	pay my friend a visit and see what can I find out about the case off the record. After all Andrew was always helpful even before
+	joining the force. The time I enter the building I hear the familiar voice of Andrew.<br/>
+	Andrew: Hey pal! Where y'at?<br/>
+	Detective: Hey Andrew, just got a case and wanted some info.<br/>
+	Andrew: Well, I have spare time now if you need any help.<br/>
+	Detective: Thanks Andy, your help is always appreciated.
+	</p>
+	<p class="black">
+		<button type="button" id="archive" class="linkbutton" onclick="location.href='#openModal'; disable(); enable(); setCookie('archive', 'true')">• Take a look at the archive for 
+		a second chance on the case. More details are always welcome.</button>
+		<div id="openModal" class="modalDialog"> <!-- creation of the popup window -->
+			<div>
+				<a onclick="location.href='#close'" title="" class="close">x</a> <!-- close button of popup -->
+				<p>
+					Damn, I should have known that this time of night it's closed. Think I need to rest soon.
+				</p>
+			</div>
+		</div>
+	</p>
+	<p class="black">
+		<button type="button" id="andrew" class="linkbutton" onclick="location.href='#openModal2'; disable2(); enable(); setCookie('andrew', 'true')">• Andrew is sitting on his desk
+		relaxing. Maybe I should accept his offer and have a little talk.</button>
+		<div id="openModal2" class="modalDialog"> <!-- creation of the popup window -->
+			<div>
+				<a onclick="location.href='#openModal3'" title="" class="close">x</a> <!-- close button of popup -->
+				<p>
+					Detective: I am here for Alexander's Barrow case. You've been on it or know anything about it?<br/>
+					Andrew: I was there but know nothing special. Forensics said something about poisoning but that's as far as
+					I know, because our superiors took over the case.<br/>
+					Detective: I guess this is it then. I am done here.<br/>
+					Andrew: Well you can always try your luck with the sergeant down the corridor.<br/>
+					Detective: Thanks, next beer we have is on me!<br/>
+					Andrew: Haha you bet!
+				</p>
+			</div>
+		</div>
+		<div id="openModal3" class="modalDialog">
+			<div>
+				<a onclick="location.href='#close3'" title="" class="close">x</a>
+				<p>
+					As you walk towards sergeant's office you hear voices from the entrance of the police station. There was an
+					incident. An officer runs by you and calls the sergeant. Seems you wont have that little talk you wanted.
+				</p>
+			</div>
+		</div>
+	</p>
+	<p class="black">
+		<button type="button" id="sergeant" class="linkbutton" onclick="location.href='#openModal4'; disable2(); enable(); setCookie('sergeant', 'true')">• Go to the sergeants office.</button>
+		<div id="openModal4" class="modalDialog">
+			<div>
+				<p>
+					After the casual formalities, I get straight to the point. Hopefully this is a good idea.<br/><br/>
+					<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal5'">• I know the Barrow case is a bit classified but we can help
+					each other. After all as a private detective the first thing I have to do if I find something is call the police.</button><br/><br/>
+					<button type="button" class="linkbutton" style="color:black" onclick="location.href='#openModal6'">• We all can get a benefit. Me, I get my pay-check from my
+					client, as for you, you get all the infos from, let's say an unknown call and you get your promotion.</button>
+				</p>
+			</div>
+		</div>
+		<div id="openModal5" class="modalDialog">
+			<div>
+			<script type="text/javascript">
+				function finalresult(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers').innerHTML = "Sergeant: I think it's ok to have on more 'invisible' hand on the case. The death" +
+																		" caused from poisoning and as far as we can tell from the side effects it must have been a strong one" +
+																		'<br/>' + "Detective: You've made the right choice sharing the infors. Later officer.";											
+					} 
+					else{
+						document.getElementById('answers').innerHTML = "You seem to not understand what classified means. No is a no and I have nothing more" +
+																		" to tell. Off you go now!";														
+					}	
+				}
+				function choices(){ //check available player path choices
+					var b2 = localStorage.getItem("button2");
+					var b3 = localStorage.getItem("button3");
+					if (b3 != "3" && b2 != "2"){
+						document.getElementById('option1').innerHTML = "Now that I am done with the hard part." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• I can already taste the fine scotch in my mouth.</button>' +
+																		'<br/><br/>' + '<button type="button" id="river" value="3" class="linkbutton" style="color:black;" onclick="gotoriver(); button3()">• As I recall Barrow have a company down the river, bet they will welcome me.</button>';
+						}
+					if (b3 == "3" && b2 != "2"){
+						document.getElementById('option2').innerHTML = "That's it for tonight." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• What a better way to end your day than having a drink in an expensive bar?</button>';
+					}
+					if (b3 != "3" && b2 == "2"){
+						document.getElementById('option3').innerHTML = "Hmm a little fresh air is what I need after all that" + '<br/><br/>' + '<button type="button" id="river" value="3" class="linkbutton" style="color:black;" onclick="gotoriver(); button3()">• On my way to the river side, where the only Barrow business is active right now.</button>';
+					}
+					if (b3 == "3" && b2 == "2"){
+						document.getElementById('option4').innerHTML = "No better feeling than your bed after a hard day." + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotonext()">• Jean Barrow will wait tomorrow morning and I do not want to make my money wait, so better get some sleep.</button>';
+					}
+				}
+			</script>
+				<p>
+					<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal8'; roll(); finalresult();"></img>
+				</p>
+			</div>
+		</div>
+		<div id="openModal8" class="modalDialog">
+			<div>
+				<a onclick="location.href='#openModal9';" title="" class="close">x</a>
+				<p>
+				<p id="results"/> <!-- paragraphs for the innerHTML -->
+				<p id="results2"/>
+				<p id="answers"/>
+				</p>
+				<script type="text/javascript">
+					setCookie('rolled' , 'true');
+				</script>
+			</div>
+		</div>
+		<div id="openModal6" class="modalDialog">
+			<div>
+			<script type="text/javascript">
+				function finalresult2(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers2').innerHTML = "Sergeant: You seem a trustworthy guy, so the deal is on. The big hint we have is that he died from poisoning and his" +
+																		" body was almost covered in blisters. His characteristics were a bit deformed. If you ask me, it looked really" +
+																		" painfull. Remember, you have to keep your own side of the deal, for your own good." +
+																		'<br/>' + "Detective: You've made the right choice sharing the infors. Later officer.";											
+					} 
+					else{
+						document.getElementById('answers2').innerHTML = "You seem to not understand what classified means. No is a no and I have nothing more" +
+																		" to tell. Off you go now!";														
+					}	
+				}
+			</script>
+				<p>
+					<img class="dice" src="images/dice.png" id="rolldice2" onclick="play(); location.href='#openModal10'; roll2(); finalresult2();"></img>	
+				</p>
+			</div>
+		</div>
+		<div id="openModal10" class="modalDialog">
+			<div>
+				<a onclick="location.href='#openModal9';" title="" class="close">x</a>
+				<p>
+				<p id="results3"/> 
+				<p id="results4"/>
+				<p id="answers2"/>
+				</p>
+				<script type="text/javascript">
+					setCookie('rolled2' , 'true');
+				</script>
+			</div>
+		</div>
+		<div id="openModal9" class="modalDialog">
+			<div>
+				<a onclick="location.href='#close9';" title="" class="close">x</a>
+				<p>
+					Exiting the sergeants office you see more policemen in the building and some other men. Probably the was an arrest or something.
+					Andrew seems preoccupied right now and doesn't have time for you.
+				</p>
+			</div>
+		</div>
+	</p>
+	<p class="black">
+		<button type="button" id="exit" class="linkbutton" onclick="location.href='#openModal7'; choices();" disabled="disabled">• Better get going.</button>
+		<div id="openModal7" class="modalDialog">
+			<div>
+				<p id="option1"/>
+				<p id="option2"/>
+				<p id="option3"/>
+				<p id="option4"/>
+				<script type="text/javascript">
+					setCookie('options' , 'true');
+				</script>
+			</div>
+		</div>
+	</p>
+	<a id="police" href="police.html" title="true"></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('police'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('police').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("archive")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('archive').disabled=true;
+		}
+	}
+	function check2(){
+		if(getCookie("andrew")=="true" || getCookie("sergeant")=="true"){ 
+			document.getElementById('andrew').disabled=true;
+			document.getElementById('sergeant').disabled=true;
+		}
+	}
+	function check3(){
+		if(getCookie("options")=="true"){
+			choices();
+		}
+	}
+	function check4(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+	function check5(){
+		if(getCookie("rolled2")=="true"){
+			finalresult2();
+		}
+	}
+</script>
+</html>

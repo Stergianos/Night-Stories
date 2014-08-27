@@ -10,10 +10,8 @@
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript">		
-	
 		function setCookie(name, value) { //set cookie 
 			document.cookie=name+"="+value;
 		}
@@ -46,6 +44,7 @@
 			window.history.forward();
 			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
 		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
 		document.onkeydown = function(e) {
 		// keycode for F5
 			if (e.keyCode === 116) {
@@ -73,21 +72,7 @@
 				document.getElementById('exit').disabled=false;
 			}
 		}
-		function finalresult(){ // continue the story depending on success rate of dices 
-			var finalres = localStorage.getItem("final");
-			if (finalres == 1){
-				document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
-																"it's Jean Barrow informed him. It shouldn't have done it. " +
-																"The whole ingestigation is compromised and it's even weirder " +
-																"that he tried to hide something from me.";											
-			} 
-			else{
-				document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
-																"it's Jean Barrow informed him. It shouldn't have done it. " +
-																"The whole ingestigation is compromised.";														
-			}	
-		}
-		function gotobar(){
+		function gotobar(){ // player choices left before next day starts
 			window.location.href='bar.html';
 		}
 		function gotopolice(){
@@ -96,33 +81,35 @@
 		function gotonext(){
 			window.location.href='mansion.html';
 		}
-		function choices(){ //check available player path choices
-			var b1 = localStorage.getItem("button1");
-			var b2 = localStorage.getItem("button2");
-			if (b1 != "1" && b2 != "2"){
-				document.getElementById('option1').innerHTML = "gerger" + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotobar()">• Bar</button>' +
-																'<br/>' + '<button type="button" class="linkbutton" style="color:black; onclick="gotopolice()"">• Police</button>';
-			}
-			if (b1 == "1" && b2 != "2"){
-				document.getElementById('option2').innerHTML = "fgwgwwg" + '<button type="button" class="linkbutton" style="color:black; onclick="gotobar()">• Bar</button>';
-			}
-			if (b1 != "1" && b2 == "2"){
-				document.getElementById('option3').innerHTML = "mpourdes" + '<button type="button" class="linkbutton" style="color:black; onclick="gotopolice()"">• Police</button>';
-			}
-			if (b1 == "1" && b2 == "2"){
-				document.getElementById('option4').innerHTML = "mpourdes vol.2" + '<button type="button" class="linkbutton" style="color:black; onclick="gotonext()"">• Mansion</button>';
-			}
+		function button1(){ // save choices so user can visit the "unclicked" areas later
+			var b1 = document.getElementById('police').value;
+			localStorage.setItem("button1", b1);
+		}
+		function button2(){
+			var b2 = document.getElementById('bar').value;
+			localStorage.setItem("button2", b2);
 		}
 		// global attributes used by the external js file
 		var resist = 2;
 		var attribute = localStorage.getItem("social");
 		var skill = localStorage.getItem("lies");
 		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
 	</script>
-	<script src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
 </head>
-<body onLoad="nobackforw(); check1(); check2(); enable()" onpageshow="if (event.persisted) nobackforw();" onunload=""> <!-- event.persisted for avoiding multi-clicking -->
+<body onLoad="checkMute(); nobackforw(); check1(); check2(); check3(); check4(); enable()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
 	<p class="white">
 	The rain has stopped minutes ago but the wind keeps blowing. Humidity found the chance to become a layer of thick fog.
 	Down the road a lone lamp flickers, giving a glimpse of life to the entrance of a port once crowded and full of life.
@@ -140,7 +127,6 @@
 						Worker: (slowly exhales the smoke) I heard the news but I never met the guy in person. The closer
 						we ever got was, he in his car and me pushing crates.
 						<br/>
-						<br/>
 						Detective: Hmm I see. Then that will be all. Thank you.
 					</p>
 				</div>
@@ -149,7 +135,7 @@
 	<p class="black">
 		<button id="foreman" class="linkbutton" onclick="location.href='#openModal2'; disable2(); enable(); setCookie('foreman', 'true');">• Seeing movement
 		inside the room I decide to go there and knock the door.</button> <!-- second choice -->
-			<div id="openModal2" class="modalDialog2">
+			<div id="openModal2" class="modalDialog">
 				<div>
 					<p>
 						Foreman: Yes, come in!<br/>
@@ -162,19 +148,53 @@
 						<br/><br/>	
 						<button class="linkbutton" style="color:black;" onclick="location.href='#openModal4'">• Maybe some of those men are able to 
 						push the limits to get what they want?</button> <!-- continue the conversation 1 -->
-						<button id="bla" class="linkbutton" style="color:black;" onclick="location.href='#openModal3'">• Well I am talking more about behind
+						<br/><br/>
+						<button class="linkbutton" style="color:black;" onclick="location.href='#openModal3'">• Well I am talking more about behind
 						the curtains stuff.</button> <!-- continue the conversation 2 -->
 					</p>
 				</div>
 			</div>
-			<div id="openModal3" class="modalDialog3">
+			<div id="openModal3" class="modalDialog">
 				<div>
+				<script type="text/javascript">
+					function finalresult(){ // continue the story depending on success rate of dices 
+						var finalres = localStorage.getItem("final");
+						if (finalres == 1){
+							document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
+																			"it's Jean Barrow informed him. It shouldn't have done it. " +
+																			"The whole ingestigation is compromised and it's even weirder " +
+																			"that he tried to hide something from me.";											
+						} 
+						else{
+							document.getElementById('answers').innerHTML = "Thank you very much for your time and goodnight. It's weird " +
+																			"it's Jean Barrow informed him. It shouldn't have done it. " +
+																			"The whole ingestigation is compromised.";														
+						}	
+					}
+					function choices(){ //check available player path choices
+						var b1 = localStorage.getItem("button1");
+						var b2 = localStorage.getItem("button2");
+							if (b1 != "1" && b2 != "2"){
+								document.getElementById('option1').innerHTML = "I think the night is still promising." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• Head to the bar and have a drink first.</button>' +
+																				'<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• Better visit the police station.</button>';
+							}
+							if (b1 == "1" && b2 != "2"){
+								document.getElementById('option2').innerHTML = "What an exhausting night." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• Time to treat myself a drink!</button>';
+							}
+							if (b1 != "1" && b2 == "2"){
+								document.getElementById('option3').innerHTML = "As much as I hate it, I have to work a bit more tonight." + '<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• Meeting with the law enforcers of the town. What a joy...</button>';
+							}
+							if (b1 == "1" && b2 == "2"){
+								document.getElementById('option4').innerHTML = "It was about time. Home sweet home, I am on my way." + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotonext()">• I have to get up early and meet Jean Barrow at his mansion tomorrow morning.</button>';
+							}
+					}
+				</script>
 					<p>
-						<button id="rolldice" class="linkbutton" onclick="location.href='#openModal5'; roll(); finalresult();">Roll!</button>	
+						<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal5'; roll(); finalresult();"></img>	
 					</p>
 				</div>
 			</div>
-			<div id="openModal4" class="modalDialog4">
+			<div id="openModal4" class="modalDialog">
 				<div>
 					<a onclick="location.href='#close4';" title="" class="close">x</a>
 					<p>
@@ -183,7 +203,7 @@
 					</p>
 				</div>
 			</div>
-			<div id="openModal5" class="modalDialog5">
+			<div id="openModal5" class="modalDialog">
 				<div>
 					<a onclick="location.href='#close5';" title="" class="close">x</a>
 					<p>
@@ -191,17 +211,23 @@
 						<p id="results2"/>
 						<p id="answers"/>
 					</p>
+					<script type="text/javascript">
+						setCookie('rolled' , 'true');
+					</script>
 				</div>
 			</div>
 	</p>
 	<p class="black">
 		<button disabled="disabled" id="exit" class="linkbutton" onclick="location.href='#openModal6'; choices();">• I think I am done here.</button> <!-- exit choice -->
-			<div id="openModal6" class="modalDialog6">
+			<div id="openModal6" class="modalDialog">
 				<div>
 					<p id="option1"/>
 					<p id="option2"/>
 					<p id="option3"/>
 					<p id="option4"/>
+					<script type="text/javascript">
+						setCookie('options' , 'true');
+					</script>
 				</div>
 			</div>
 	</p>
@@ -214,7 +240,7 @@
 	var urlval = document.getElementById('river').title;
 	localStorage.setItem('urlval', urlval);
 	function check1(){
-		if(getCookie("worker")=="true"){ //checks for cookie, if exists name/value keep button disable status
+		if(getCookie("worker")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
 			document.getElementById('worker').disabled=true;
 		}
 	}
@@ -222,6 +248,16 @@
 		if(getCookie("foreman")=="true"){
 			document.getElementById('foreman').disabled=true;
 		}	
+	}
+	function check3(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+	function check4(){
+		if(getCookie("options")=="true"){
+			choices();
+		}
 	}
 </script>
 </html>
