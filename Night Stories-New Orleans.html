@@ -19,28 +19,29 @@
 		
 			function onDeviceReady(){
 				document.addEventListener("backbutton", onBackKeyDown, false);
-			
+				
 			}
-			function onConfirm(buttonIndex){
-				alert('You selected button' + buttonIndex);
+		function onConfirm(){
+				//alert("xit");
+				 navigator.app.exitApp();
+				
 				
 			}
 			
 		
 			
 			function onBackKeyDown(){
-				
-					navigator.notification.confirm(
-					'Are you sure you want to quit?',
-					onConfirm,
-					'exit',
-					['Yes', 'No']
+					
+					navigator.notification.alert(
+					'whaaat',
+					onConfirm
+					
+					
 				);
 			
 				
 			}
-			
-			
+		
 		</script>
 	
 	
