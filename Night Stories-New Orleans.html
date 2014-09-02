@@ -26,17 +26,16 @@
 				
 			}
 			
-			function showConfirm(){
-				navigator.notification.confirm(
+		
+			
+			function onBackKeyDown(){
+					navigator.notification.confirm(
 					'Are you sure you want to quit?',
 					onConfirm,
 					'exit',
 					'Yes, No'
 				);
-			}
 			
-			function onBackKeyDown(){
-				showConfirm();
 				
 			}
 			
