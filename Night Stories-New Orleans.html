@@ -61,11 +61,11 @@
 	
 	
 	<script type="text/javascript">
-		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		/*window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
 		function nobackforw(){
 			window.history.forward();
 			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
-		}
+		}*/
 		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
 		function sound(){
 			document.getElementById('rain1').play();
