@@ -13,19 +13,14 @@
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	
 		<script>
-		function onLoad() {	
+		
 		document.addEventListener("deviceready", onDeviceReady, false);
-		}
+		
 		
 			function onDeviceReady(){
 				document.addEventListener("backbutton", onBackKeyDown, false);
-				alert("ready");
-			}
 			
-			function onBackKeyDown(){
-				showConfirm();
 			}
-			
 			function onConfirm(buttonIndex){
 				alert('You selected button' + buttonIndex);
 				
@@ -39,6 +34,12 @@
 					'Yes, No'
 				);
 			}
+			
+			function onBackKeyDown(){
+				showConfirm();
+				
+			}
+			
 			
 		</script>
 	
