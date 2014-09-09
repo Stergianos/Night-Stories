@@ -26,12 +26,12 @@
 			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
 		}
 		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
-		function sound(){
+	/*	function sound(){
 			document.getElementById('rain1').play();
-		}
-		function delay(){
+		}*/
+		/*function delay(){
 			setTimeout("sound()", 14000);
-		}
+		}*/
 		function cont(){ // if value of save exists enable continue button
 			var getval = localStorage.getItem('urlval');
 			if (getval == "true"){
@@ -94,21 +94,32 @@
         document.addEventListener("deviceready", onDeviceReady, false);
     
 
-    // device APIs are available
-    //
+    
     function onDeviceReady() {
-        // Register the event listener
+        playAudio("rain.mp3");
         document.addEventListener("backbutton", onBackKeyDown, false);
     }
-
-    // Handle the back button
-    //
+	
+	function playAudio(src){
+		my_media=new Media(src, onSuccess, onError);
+		my_media.play();
+	}
+ 	
+ 	function onSuccess(){
+ 		
+ 	}
+ 	
+ 	function onError(){
+ 		
+ 	}
+ 	
     function onBackKeyDown() {
     	navigator.app.exitApp();
     	
-    	//navigator.notification.confirm();
+    	
     }
-
+	
+	
 		
 		
 	</script>
