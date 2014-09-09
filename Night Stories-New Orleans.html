@@ -16,14 +16,6 @@
 	
 	
 	<script type="text/javascript">
-	document.addEventListener("deviceready", onDeviceReady, false);
-		function onDeviceReady(){
-			document.addEventListener("backbutton", onBackKeyDown, false);
-			
-			}
-			function onBackKeyDown(){
-					navigator.app.exitApp();
-		}
 	
 	
 	
@@ -112,7 +104,9 @@
     // Handle the back button
     //
     function onBackKeyDown() {
-    	navigator.notification.confirm();
+    	navigator.app.exitApp();
+    	
+    	//navigator.notification.confirm();
     }
 
 		
@@ -130,7 +124,7 @@
 </head>
 <body onload="delay(); cont(); delSoundItem(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 		<!-- main theme sounds -->
-	 			<audio id="rain1" hidden="hidden" preload loop> 
+	 	<!--	<audio id="rain1" hidden="hidden" preload loop> 
 -			<source src = "sounds/rain.ogg"
 -				type = "audio/ogg"/>
 -			<source src = "sounds/rain.mp3"
@@ -147,7 +141,7 @@
 -				type = "audio/ogg"/>
 -		<source src = "sounds/click.mp3"
 -				type = "audio/mp3"/>
--	</audio>
+-	</audio> -->
 		<!-- screen buttons -->
 		<div class="wrappermain">
 			<table>
