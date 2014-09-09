@@ -61,7 +61,7 @@
 			localStorage.removeItem('mafiaFiles');
 			window.location.href='character sheet.html';
 		}
-		function mute(){
+	/*	function mute(){
 			var s1 = document.getElementById('rain1');
 			var s2 = document.getElementById('rain2');
 			var s3 = document.getElementById('clickme');
@@ -85,7 +85,7 @@
 		}
 		function delSoundItem(){
 			localStorage.removeItem('sound');
-		}
+		}*/
 	</script>
 	
 	
@@ -96,23 +96,32 @@
 
     
     function onDeviceReady() {
-        playAudio("rain.mp3");
+        playAudio();
         document.addEventListener("backbutton", onBackKeyDown, false);
     }
 	
-	function playAudio(src){
-		my_media=new Media(src, onSuccess, onError);
-		my_media.play();
-	}
- 	
- 	function onSuccess(){
- 		
- 	}
- 	
- 	function onError(){
- 		
- 	}
- 	
+	 function playAudio() {
+		
+		
+	    var my_media = new Media("http://s1download-universal-soundbank.com/mp3/sounds/16852.mp3",
+        // success callback
+        function () {
+            alert("Success");
+        },
+        // error callback
+        function (err) {
+            alert("Error");
+        },		
+		//status callback
+		function (status) {
+			alert("Status callback. Status: " + code);
+		}
+    );
+    // Play audio
+    my_media.play();
+        
+    }
+
     function onBackKeyDown() {
     	navigator.app.exitApp();
     	
@@ -135,7 +144,7 @@
 </head>
 <body onload=" cont();nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 		<!-- main theme sounds -->
-	 		<audio id="rain1" hidden="hidden" preload loop> 
+	 	<!--	<audio id="rain1" hidden="hidden" preload loop> 
 -			<source src = "sounds/rain.ogg"
 -				type = "audio/ogg"/>
 -			<source src = "sounds/rain.mp3"
@@ -146,12 +155,12 @@
 -				type = "audio/ogg"/>
 -			<source src = "sounds/rain.mp3"
 -				type = "audio/mp3"/> 					
--		</audio>
+-		</audio> -->
 -		<audio id="clickme" hidden = "hidden" preload>
--		<source src = "sounds/click.ogg"
+-	<!--	<source src = "sounds/click.ogg"
 -				type = "audio/ogg"/>
 -		<source src = "sounds/click.mp3"
--				type = "audio/mp3"/>
+-				type = "audio/mp3"/></source>-->
 -	</audio> 
 		<!-- screen buttons -->
 		<div class="wrappermain">
