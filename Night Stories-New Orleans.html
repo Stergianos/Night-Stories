@@ -11,56 +11,23 @@
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-	
-		<script>
-		
-		document.addEventListener("deviceready", onDeviceReady, false);
-		
-		
-			function onDeviceReady(){
-				document.addEventListener("backbutton", onBackKeyDown, false);
-				
-			}
-		function onConfirm(){
-				//alert("xit");
-				 navigator.app.exitApp();
-				
-				
-			}
-			
-		
-			
-			function onBackKeyDown(){
-					
-					navigator.notification.alert(
-					'whaaat',
-					onConfirm
-					
-					
-				);
-			
-				
-			}
-		
-		</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	
 	<script type="text/javascript">
+	document.addEventListener("deviceready", onDeviceReady, false);
+		function onDeviceReady(){
+			document.addEventListener("backbutton", onBackKeyDown, false);
+			
+			}
+			function onBackKeyDown(){
+					navigator.app.exitApp();
+		}
+	
+	
+	
+	
 		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
 		function nobackforw(){
 			window.history.forward();
@@ -128,10 +95,59 @@
 			localStorage.removeItem('sound');
 		}
 	</script>
+	
+	
+	<script>
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+    
+
+    // device APIs are available
+    //
+    function onDeviceReady() {
+        // Register the event listener
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+
+    // Handle the back button
+    //
+    function onBackKeyDown() {
+    	navigator.notification.confirm();
+    }
+
+		
+		
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 </head>
 <body onload="delay(); cont(); delSoundItem(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 		<!-- main theme sounds -->
-	 
+	 			<audio id="rain1" hidden="hidden" preload loop> 
+-			<source src = "sounds/rain.ogg"
+-				type = "audio/ogg"/>
+-			<source src = "sounds/rain.mp3"
+-				type = "audio/mp3"/> 					
+-		</audio>  
+-		<audio id="rain2" hidden="hidden" autoplay preload loop> 
+-			<source src = "sounds/rain.ogg"
+-				type = "audio/ogg"/>
+-			<source src = "sounds/rain.mp3"
+-				type = "audio/mp3"/> 					
+-		</audio>
+-		<audio id="clickme" hidden = "hidden" preload>
+-		<source src = "sounds/click.ogg"
+-				type = "audio/ogg"/>
+-		<source src = "sounds/click.mp3"
+-				type = "audio/mp3"/>
+-	</audio>
 		<!-- screen buttons -->
 		<div class="wrappermain">
 			<table>
@@ -155,7 +171,7 @@
 			<div id="openModal2" class="modalDialog">
 				<div>
 					<!-- close button -->
-					<a onclick="location.href='#close2'" title="" class="close">x</a>
+					<a onclick="location.href='#close2'" title="" class="close" >x</a>
 					<p>
 					Night Stories-New Orleans is an old school RPG based on pen n' paper games. The outcome of the story is affected by the 
 					decisions of the player and uses a ten-sided dice system.<br/><br/>
@@ -184,7 +200,7 @@
 					</p>
 				</div>
 			</div>
-		<a class="links"  type="button" onclick="location.href='https://www.google.gr/'"><img src="images/exit.png" class="imageexit"></a>
+		<a class="links"  type="button" onclick="onBackKeyDown()"><img src="images/exit.png" class="imageexit"></a>
 		<div id="openModal3" class="modalDialog3"> <!-- confirm to reset data for new game -->
 			<div>
 				<p>
