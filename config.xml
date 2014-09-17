@@ -36,14 +36,15 @@
     <content src="index.html" />
 	<preference name="phonegap-version" value="3.5.0" />
     <preference name="loglevel" value="DEBUG" />
-    <preference name="Orientation" value="landscape" />
-    <!--
+    	<preference name="KeepRunning" value="false"/>
       <preference name="splashscreen" value="resourceName" />
       <preference name="backgroundColor" value="0xFFF" />
       <preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
       <preference name="disallowOverscroll" value="true" />
-    -->
+    <preference name="LoadingDialog" value="My Title,My Message"/>
+	<preference name="LoadingPageDialog" value="My Title,My Message"/>
+	<preference name="Orientation" value="landscape" />
 
     <feature name="App">
       <param name="android-package" value="org.apache.cordova.App"/>
@@ -61,7 +62,7 @@
       <param name="android-package" value="org.apache.cordova.CompassListener"/>
     </feature>
     <feature name="Dialogs">
-      <param name="android-package" value="org.apache.cordova.Dialogs"/>
+      <param name="android-package" value="org.apache.cordova.dialogs"/>
     </feature>
     
     <feature name="Media">
