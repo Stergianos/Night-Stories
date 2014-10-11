@@ -33,7 +33,7 @@
     <access origin="*"/>
 
     <!-- <content src="http://mysite.com/myapp.html" /> for external pages -->
-    <content src="index.html" />
+    <content src="Night Stories-New Orleans.html" />
 	<preference name="phonegap-version" value="3.5.0" />
     <preference name="loglevel" value="DEBUG" />
     	<preference name="KeepRunning" value="false"/>
@@ -42,8 +42,8 @@
       <preference name="loadUrlTimeoutValue" value="20000" />
       <preference name="InAppBrowserStorageEnabled" value="true" />
       <preference name="disallowOverscroll" value="true" />
-    <preference name="LoadingDialog" value="My Title,My Message"/>
-	<preference name="LoadingPageDialog" value="My Title,My Message"/>
+    <!--<preference name="LoadingDialog" value="My Title,My Message"/>
+	<preference name="LoadingPageDialog" value="My Title,My Message"/>-->
 	<preference name="Orientation" value="landscape" />
 
     <feature name="App">
