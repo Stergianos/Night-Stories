@@ -109,6 +109,5 @@
     </feature>
     <!-- Deprecated plugins element. Remove in 3.0 -->
     <plugins>
-	<gap:plugin name="com.rjfun.cordova.plugin.lowlatencyaudio" version="1.1.3" />
     </plugins>
 </widget>
