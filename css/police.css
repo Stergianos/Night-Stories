@@ -83,6 +83,7 @@ fieldset {
 }
 .modalDialog:target { /*creation of pseudo-class*/
 	opacity:1;
+	height:100%;
 	pointer-events: auto;
 }
 .modalDialog > div { /*style the div inside modal box*/
