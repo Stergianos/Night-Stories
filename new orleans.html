@@ -173,5 +173,46 @@
 				</p>
 			</div>
 		</div>
+		
+		<script>
+			
+        document.addEventListener("deviceready", onDeviceReady, false);
+    
+
+    
+    function onDeviceReady() {
+        playAudio();
+        document.addEventListener("backbutton", onBackKeyDown, false);
+    }
+	
+	 function playAudio() {
+		
+		
+	    var my_media = new Media("rain.mp3",
+        
+        function () {
+            alert("Success");
+        },
+     
+        function (err) {
+            alert("Error");
+        },		
+		
+		function (status) {
+			alert("Status callback. Status: " + code);
+		}
+    );
+   
+    my_media.play();
+        
+    }
+
+    function onBackKeyDown() {
+   
+    	navigator.app.exitApp();
+    	
+    	
+    }
+		</script>
 </body>
 </html>
