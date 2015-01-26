@@ -10,7 +10,6 @@
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript">
 		function setCookie(name, value) { //set cookie 
 			document.cookie=name+"="+value;
@@ -137,8 +136,8 @@
 <body onLoad="checkMute(); nobackforw(); check1(); check2(); check3(); check4(); check5(); check6(); check7(); check8(); enable()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
 	<audio id="blues" hidden="hidden" preload autoplay> 
-		<source src = "sounds/blues.ogg"
-			type = "audio/ogg"/>
+		<!-- <source src = "sounds/blues.ogg"
+			type = "audio/ogg"/> -->
 		<source src = "sounds/blues.mp3"
 			type = "audio/mp3"/> 					
 	</audio>
@@ -191,7 +190,7 @@
 				var finalres = localStorage.getItem("final");
 				if (finalres == 1){
 					document.getElementById('answers').innerHTML = "That red dress is surely revealing, after all every job has its proper outfit. Blonde, " +
-																	"curvy siluette but not far, with a sparkling look on her eyes. That can be no one "+
+																	"curvy siluette but not fat, with a sparkling look on her eyes. That can be no one "+
 																	"else but Louise."+'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal()">• Go and talk to her</button>';	
 				} 
 				else{

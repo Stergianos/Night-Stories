@@ -10,7 +10,6 @@
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript">		
 		function setCookie(name, value) { //set cookie 
 			document.cookie=name+"="+value;
@@ -72,22 +71,16 @@
 				document.getElementById('exit').disabled=false;
 			}
 		}
-		function gotobar(){ // player choices left before next day starts
-			window.location.href='bar.html';
+		function gotoart(){
+			window.location.href='riverart.html';
 		}
-		function gotopolice(){
-			window.location.href='police.html';
+		function first1(){ // used if river is choosen first and after the police
+			var f1 = "1";
+			localStorage.setItem("first1", f1);
 		}
-		function gotonext(){
-			window.location.href='mansion.html';
-		}
-		function button1(){ // save choices so user can visit the "unclicked" areas later
-			var b1 = document.getElementById('police').value;
-			localStorage.setItem("button1", b1);
-		}
-		function button2(){
-			var b2 = document.getElementById('bar').value;
-			localStorage.setItem("button2", b2);
+		function first2(){ // used if river is choosen first and after the bar
+			var f2 = "2";
+			localStorage.setItem("first2", f2);
 		}
 		// global attributes used by the external js file
 		var resist = 2;
@@ -175,17 +168,17 @@
 						var b1 = localStorage.getItem("button1");
 						var b2 = localStorage.getItem("button2");
 							if (b1 != "1" && b2 != "2"){
-								document.getElementById('option1').innerHTML = "I think the night is still promising." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• Head to the bar and have a drink first.</button>' +
-																				'<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• Better visit the police station.</button>';
+								document.getElementById('option1').innerHTML = "I think the night is still promising." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotoart(); first2()">• Head to the bar and have a drink first.</button>' +
+																				'<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotoart(); first1();">• Better visit the police station.</button>';
 							}
 							if (b1 == "1" && b2 != "2"){
-								document.getElementById('option2').innerHTML = "What an exhausting night." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotobar(); button2()">• Time to treat myself a drink!</button>';
+								document.getElementById('option2').innerHTML = "What an exhausting night." + '<br/><br/>' + '<button type="button" id="bar" value="2" class="linkbutton" style="color:black;" onclick="gotoart();">• Time to treat myself a drink!</button>';
 							}
 							if (b1 != "1" && b2 == "2"){
-								document.getElementById('option3').innerHTML = "As much as I hate it, I have to work a bit more tonight." + '<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotopolice(); button1()">• Meeting with the law enforcers of the town. What a joy...</button>';
+								document.getElementById('option3').innerHTML = "As much as I hate it, I have to work a bit more tonight." + '<br/><br/>' + '<button type="button" id="police" value="1" class="linkbutton" style="color:black;" onclick="gotoart();">• Meeting with the law enforcers of the town. What a joy...</button>';
 							}
 							if (b1 == "1" && b2 == "2"){
-								document.getElementById('option4').innerHTML = "It was about time. Home sweet home, I am on my way." + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotonext()">• I have to get up early and meet Jean Barrow at his mansion tomorrow morning.</button>';
+								document.getElementById('option4').innerHTML = "It was about time. Home sweet home, I am on my way." + '<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="gotoart()">• I have to get up early and meet Jean Barrow at his mansion tomorrow morning.</button>';
 							}
 					}
 				</script>

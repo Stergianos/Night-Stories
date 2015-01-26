@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>New Orleans</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/new orleans.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript">
+	
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		function sound(){
+			document.getElementById('rain1').play();
+		}
+		function delay(){
+			setTimeout("sound()", 14000);
+		}
+		function cont(){ // if value of save exists enable continue button
+			var getval = localStorage.getItem('urlval');
+			if (getval == "true"){
+				document.getElementById('continue').disabled = false;
+			}
+		}
+		function load(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			var loaded = localStorage.getItem('save');
+			setTimeout( function(){window.location.href=loaded;}, 300);
+		}
+		function check(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			var getval = localStorage.getItem('urlval');
+			if (getval != "true"){ // if there is no save, start game 
+				setTimeout( function() {window.location.href='character sheet.html';}, 300);
+			}
+		}
+		function reset(){
+			localStorage.removeItem('save'); // if there is a save, reset data and start new game
+			localStorage.removeItem('urlval');
+			localStorage.removeItem('button1');
+			localStorage.removeItem('button2');
+			localStorage.removeItem('button3');
+			localStorage.removeItem('mafiaFiles');
+			localStorage.removeItem('first1');
+			localStorage.removeItem('first2');
+			localStorage.removeItem('sl');
+			localStorage.removeItem('lietry');
+			localStorage.removeItem('first1');
+			localStorage.removeItem('first2');
+			localStorage.removeItem('diary6');
+			localStorage.removeItem('diary7');
+			window.location.href='character sheet.html';
+		}
+		function mute(){
+			var s1 = document.getElementById('rain1');
+			var s2 = document.getElementById('rain2');
+			var s3 = document.getElementById('clickme');
+			s1.muted=true;
+			s2.muted=true;
+			s3.muted=true;
+			var sound = localStorage.setItem('sound', s1.muted); // set variable to be used for muting all sounds in mute.js
+			document.getElementById('soundb').style.visibility="hidden";
+			document.getElementById('soundb2').style.visibility="visible";
+		}
+		function unmute(){
+			var s1u = document.getElementById('rain1');
+			var s2u = document.getElementById('rain2');
+			var s3u = document.getElementById('clickme');
+			s1u.muted=false;
+			s2u.muted=false;
+			s3u.muted=false;
+			var sound = localStorage.setItem('sound', s1u.muted);
+			document.getElementById('soundb').style.visibility="visible";
+			document.getElementById('soundb2').style.visibility="hidden";
+		}
+		function delSoundItem(){
+			localStorage.removeItem('sound');
+		}
+	</script>
+</head>
+<body onload="delay(); cont(); delSoundItem(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+		<!-- main theme sounds -->
+		<audio id="rain1" hidden="hidden" preload loop> 
+			<source src = "sounds/rain.ogg"
+				type = "audio/ogg"/>
+			<source src = "sounds/rain.mp3"
+				type = "audio/mp3"/> 					
+		</audio>  
+		<audio id="rain2" hidden="hidden" autoplay preload loop> 
+			<source src = "sounds/rain.ogg"
+				type = "audio/ogg"/>
+			<source src = "sounds/rain.mp3"
+				type = "audio/mp3"/> 					
+		</audio>
+		<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
+		<!-- screen buttons -->
+		<div class="wrappermain">
+			<table>
+				<tr class="spacedown">
+					<td>
+					<button type="button" class="linkbuttoneffect" onclick="check();javascript:setTimeout(function(){location.href='#openModal3'},300);">&nbsp;&nbsp;PLAY&nbsp;&nbsp;</button>
+					</td>
+				</tr>
+				<tr></tr>
+				<tr>
+					<td>
+					<button id="continue" class="linkbuttoneffect" onclick="load()" disabled="disabled">&nbsp;&nbsp;CONTINUE&nbsp;&nbsp;</button>
+					</td>
+				</tr>
+			</table>
+		</div>
+		<a id="soundb" onclick="mute();" class="links" type="button"><img src="images/sound.png" class="imagesound"/></a>
+		<a id="soundb2" onclick="unmute();" class="links" type="button" style="visibility:hidden"><img src="images/soundunmute.png" class="imagesound"/></a>
+		<a class="links"  type="button" onclick="location.href='#openModal2'"><img src="images/help.png" class="imagehelp"/></a>
+			<!-- creation of the pop up window -->
+			<div id="openModal2" class="modalDialog">
+				<div>
+					<!-- close button -->
+					<a onclick="location.href='#close2'" title="" class="close">x</a>
+					<p>
+					Night Stories-New Orleans is an old school RPG based on pen n' paper games. The outcome of the story is affected by the 
+					decisions of the player and uses a ten-sided dice system.<br/><br/>
+					<strong>RULES</strong><br/><br/>
+					The game begins by creating your character. You have to assign points to attributes and skills which will affect 
+					your chances of succeeding or failing when the dice are rolled. The numbers 7, 8, 9 & 10 indicate success. 
+					The number 10 re-rolls the specific dice. For a scene to be successful you may need more than one successful dice, 
+					taking into consideration the difficulty level of the scene, which is not visible to you. The number of dice comes from 
+					the summary of the specific attributes and skills depending on the scene<br/><br/>
+					For Example: Your character tries to shoot a target. If you have assigned 3 points to physical attribute and you have 
+					chosen the pistol skill, you have a total of 4 dice to roll. Assuming you have rolled 2, 8, 5, 10, you have two successes 
+					and number 10 is re-rolled, giving you a 9. You have three successes, totally. The difficulty level of the scene is two. 
+					Since you have three successes you complete the scene successfully, provided with the extra info or accomplish your task.<br/><br/>
+					When the summary of the attribute and skill needed on a scene is zero then the difficulty of this scene is increased dramatically. 
+					The player is able to roll only one die but the rules applied are the same as explained above.
+					</p>
+				</div>
+			</div>
+		<a class="links"  type="button" onclick="location.href='#openModal'"><img src="images/about.png" class="imageabout"/></a>
+			<div id="openModal" class="modalDialog">
+				<div>
+					<a onclick="location.href='#close'" title="" class="close">x</a>
+					<p>
+					<strong>Developing:</strong> Γιωργος Μιχάλαινας - Στέργιος Παππάς.<br/><br/>
+					<strong>Artwork:</strong> Σταυρος Τακτικός.<br/><br/>
+					<strong>Graphic Design:</strong> Μαρία Κορμπίλα.<br/><br/>
+					<strong>Special Thanks To:</strong>
+					</p>
+				</div>
+			</div>
+		<a class="links"  type="button" onclick="location.href='https://www.google.gr/'"><img src="images/exit.png" class="imageexit"></a>
+		<div id="openModal3" class="modalDialog3"> <!-- confirm to reset data for new game -->
+			<div>
+				<p>
+				Starting a new game will reset your progress! Continue anyway?<br/><br/>
+				<button class="linkbutton" onclick="reset()">YES!&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+				<button class="linkbutton" onclick="location.href='#close3'">NO!</button>
+				</p>
+			</div>
+		</div>
+</body>
+</html>

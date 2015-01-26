@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Cemetery</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/cemeteryart.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">		
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function next(){
+			var d6 = localStorage.getItem("diary6");
+			var d7 = localStorage.getItem("diary7");
+			var clicked = document.getElementById('clickme');
+			if ( d6 == 1){
+				clicked.play();
+				setTimeout( function(){window.location.href="diary6.html";}, 300);
+			}
+			else{
+				clicked.play();
+				setTimeout( function(){window.location.href="diary7.html";}, 300);
+			}
+		}
+	</script>
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+	<audio id="clickme" hidden = "hidden" preload>
+		<source src = "sounds/click.ogg"
+				type = "audio/ogg"/>
+		<source src = "sounds/click.mp3"
+				type = "audio/mp3"/>
+	</audio>
+	<a class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a>
+</body>
+</html>

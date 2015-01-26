@@ -10,8 +10,6 @@
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript">
 		function setCookie(name, value) { //set cookie 
 			document.cookie=name+"="+value;
@@ -76,6 +74,21 @@
 		function modal3(){ 
 			window.location.href='footchase.html#openModal6';
 		}
+		function modal4(){ 
+			window.location.href='footchase.html#openModal7';
+		}
+		function modal5(){ 
+			window.location.href='footchase.html#openModal9';
+		}
+		function modal6(){ 
+			window.location.href='footchase.html#openModal10';
+		}
+		function modal7(){ 
+			window.location.href='footchase.html#openModal12';
+		}
+		function modal8(){ 
+			window.location.href='footchase.html#openModal13';
+		}
 		var resist = 2;
 		var attribute = localStorage.getItem("physical");
 		var skill = localStorage.getItem("running");
@@ -84,11 +97,19 @@
 		var attribute2 = localStorage.getItem("physical");
 		var skill2 = localStorage.getItem("running");
 		var total2 = parseInt(attribute2, 10) + parseInt(skill2, 10);
+		var resist3 = 2;
+		var attribute3 = localStorage.getItem("physical");
+		var skill3 = localStorage.getItem("running");
+		var total3 = parseInt(attribute3, 10) + parseInt(skill3, 10);
+		var resist4 = 2;
+		var attribute4 = localStorage.getItem("physical");
+		var skill4 = localStorage.getItem("running");
+		var total4 = parseInt(attribute4, 10) + parseInt(skill4, 10);
 	</script>
 	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
 	<script type="text/javascript" src="scripts/mute.js"></script>
 </head>
-<body onLoad="checkMute(); check1(); check2(); check3(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<body onLoad="checkMute(); check1(); check2(); check3(); check4(); check5(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
 	<audio id="dice" hidden="hidden" preload> 
 		<source src = "sounds/dice.ogg"
@@ -106,7 +127,7 @@
 	Tonight it's pretty cold outside. You can see your breath and after a few times it's like giving you a pace.</br>
 	I feel I'm being followed from the time I left my house.</br>
 	In the next corner you turn around quickly and you manage to see a person hiding behind a wall.</br>
-	OK, now I am pretty sure someone is after me and I need to get the situation in my hands. Closing the distance between me and the person I noticed I put
+	OK, now I am pretty sure someone is after me and I need to get the situation in my hands. Closing the distance between me and the person I noticed, I put
 	my hand over my revolver... Almost at the corner and I hear footsteps running away.
 	</p>
 	<p class="black">
@@ -123,7 +144,7 @@
 					} 
 					else{
 						document.getElementById('answers').innerHTML = "That sneaky bastard is way faster than I expected." +
-																		'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal()">• Put some more effort.</button>';
+																		'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal4()">• Put some more effort.</button>';
 					}	
 				}
 			</script>
@@ -191,8 +212,146 @@
 				Detective: Are you feeling ok?</br>
 				He seems to suffocate, his mouth is open trying probably to speak but there are no words coming out of it. It's full of maggots crawling out.
 				His feet can no longer sustain his body weight... He drops down dead! Maggots are everywhere in his body, crawling to their freedom, even from his eyes...</br></br>
-				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='diary3.html'">• You keep the notebook in your hands tightly, trying 
+				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='footchaseart.html'">• You keep the notebook in your hands tightly, trying 
 				not to vomit from the horrific view. You disappear into the dark roads of New Orleans going back home. Jean Barrow can wait for now.</button>
+				</p>
+			</div>
+		</div>
+		<div id="openModal6" class="modalDialog">
+			<div>
+				<p>
+				You walk towards the stranger with your gun in your hands.</br>
+				Detective: Stay put!</br>
+				Stranger: ...</br>
+				(thud) The stranger falls down like a soulless sack of meat.</br>
+				You go over him, put your hand on his shoulder trying to turn him upside down.</br>
+				Detective: What is wrong with you?</br>
+				You feel something itching your hand. Looking at it you see maggots. With a disgusting look at your face, you shake your arm throwing them
+				down and quickly turn the stranger face up. You try not to vomit.</br>
+				Slimy maggots welling from every part of his body, his eyes blank, staring at you, slowly becoming a nutritious dessert.</br>
+				A quick search at his jacket reveals a small notebook. You grab it and turn around, putting your hands against the wall and start vomiting.</br></br>
+				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='footchaseart.html'">• You can't take it any more and you
+				have to move out of there before someone sees you with a dead body and things get complicated.</button>
+				</p>
+			</div>
+		</div>
+		<div id="openModal7" class="modalDialog">
+			<div>
+			<script type="text/javascript">
+				function finalresult3(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers3').innerHTML = "You chase him in the alleys downtown, your lungs are full of oxygen and you feel" +
+																		" you can do this."+'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal5()">• Come on a little more.</button>';											
+					} 
+					else{
+						document.getElementById('answers3').innerHTML = "He throws down a garbage can that blocks your way. The distance between you and him becomes greater. Strangely, after a few seconds he slows down and get down on his knees." +
+																		'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal6()">• Having the revolver on your hands you get behind him.</button>';
+					}	
+				}
+			</script>
+				<p>
+				<img class="dice" src="images/dice.png" id="rolldice3" onclick="play(); location.href='#openModal8'; roll3(); finalresult3();"></img>
+				</p>
+			</div>
+		</div>
+		<div id="openModal8" class="modalDialog">
+			<div>
+				<p>
+				<p id="results5"/> <!-- paragraphs for the innerHTML -->
+				<p id="results6"/>
+				<p id="answers3"/>
+				</p>
+				<script type="text/javascript">
+					setCookie('rolled3' , 'true');
+				</script>
+			</div>
+		</div>
+		<div id="openModal10" class="modalDialog">
+			<div>
+				<p>
+				You walk towards the stranger with your gun in your hands.</br>
+				Detective: Stay put!</br>
+				Stranger: ...</br>
+				(thud) The stranger falls down like a soulless sack of meat.</br>
+				You go over him, put your hand on his shoulder trying to turn him upside down.</br>
+				Detective: What is wrong with you?</br>
+				You feel something itching your hand. Looking at it you see maggots. With a disgusting look at your face, you shake your arm throwing them
+				down and quickly turn the stranger face up. You try not to vomit.</br>
+				Slimy maggots welling from every part of his body, his eyes blank, staring at you, slowly becoming a nutritious dessert.</br>
+				A quick search at his jacket reveals a small notebook. You grab it and turn around, putting your hands against the wall and start vomiting.</br></br>
+				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='footchaseart.html'">• You can't take it any more and you
+				have to move out of there before someone sees you with a dead body and things get complicated.</button>
+				</p>
+			</div>
+		</div>
+		<div id="openModal9" class="modalDialog">
+			<div>
+			<script type="text/javascript">
+				function finalresult4(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers4').innerHTML = "You are just behind him. You put all your strenght pushing and toshing him" +
+																		" on the nearest wall."+'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal7()">• Who the hell are you?</button>';											
+					} 
+					else{
+						document.getElementById('answers4').innerHTML = "He throws down a garbage can that blocks your way. The distance between you and him becomes greater. Strangely, after a few seconds he slows down and get down on his knees." +
+																		'<br/><br/>' + '<button type="button" class="linkbutton" style="color:black;" onclick="modal8()">• Having the revolver on your hands you get behind him.</button>';
+					}	
+				}
+			</script>
+				<p>
+				<img class="dice" src="images/dice.png" id="rolldice4" onclick="play(); location.href='#openModal11'; roll4(); finalresult4();"></img>	
+				</p>
+			</div>
+		</div>
+		<div id="openModal11" class="modalDialog">
+			<div>
+				<p>
+				<p id="results7"/> <!-- paragraphs for the innerHTML -->
+				<p id="results8"/>
+				<p id="answers4"/>
+				</p>
+				<script type="text/javascript">
+					setCookie('rolled4' , 'true');
+				</script>
+			</div>
+		</div>
+		<div id="openModal12" class="modalDialog">
+			<div>
+				<p>
+				You point him with your gun.</br>
+				Detective: I will not ask twice, who are you and what you want?!</br>
+				Stranger: Detective Marshal, but easy with the gun, I just want to talk to you.</br>
+				Detective: I just want to be sure that you are not a threat.</br>
+				You lower your gun slowly but still keeping it in your hand.</br>
+				Detective: Go on.</br>
+				Detective Marshal takes out of his pocket a small notebook.</br>
+				Marshal: The case we are in is somehow suspicious from the very beginning. Inside this notebook there are all the people relative with the case.</br>
+				You help him get up and you are ready to ask the next question when you notice that he starts to choke.</br>
+				Detective: Are you feeling ok?</br>
+				He seems to suffocate, his mouth is open trying probably to speak but there are no words coming out of it. It's full of maggots crawling out.
+				His feet can no longer sustain his body weight... He drops down dead! Maggots are everywhere in his body, crawling to their freedom, even from his eyes...</br></br>
+				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='footchaseart.html'">• You keep the notebook in your hands tightly, trying 
+				not to vomit from the horrific view. You disappear into the dark roads of New Orleans going back home. Jean Barrow can wait for now.</button>
+				</p>
+			</div>
+		</div>
+		<div id="openModal13" class="modalDialog">
+			<div>
+				<p>
+				You walk towards the stranger with your gun in your hands.</br>
+				Detective: Stay put!</br>
+				Stranger: ...</br>
+				(thud) The stranger falls down like a soulless sack of meat.</br>
+				You go over him, put your hand on his shoulder trying to turn him upside down.</br>
+				Detective: What is wrong with you?</br>
+				You feel something itching your hand. Looking at it you see maggots. With a disgusting look at your face, you shake your arm throwing them
+				down and quickly turn the stranger face up. You try not to vomit.</br>
+				Slimy maggots welling from every part of his body, his eyes blank, staring at you, slowly becoming a nutritious dessert.</br>
+				A quick search at his jacket reveals a small notebook. You grab it and turn around, putting your hands against the wall and start vomiting.</br></br>
+				<button type="button" id="exit1" class="linkbutton" style="color:black;" onclick="location.href='footchaseart.html'">• You can't take it any more and you
+				have to move out of there before someone sees you with a dead body and things get complicated.</button>
 				</p>
 			</div>
 		</div>
@@ -218,6 +377,16 @@
 	function check3(){
 		if(getCookie("rolled2")=="true"){
 			finalresult2();
+		}
+	}
+	function check4(){
+		if(getCookie("rolled3")=="true"){
+			finalresult3();
+		}
+	}
+	function check5(){
+		if(getCookie("rolled4")=="true"){
+			finalresult4();
 		}
 	}
 </script>

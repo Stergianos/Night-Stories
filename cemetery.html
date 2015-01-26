@@ -1,0 +1,314 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Cemetery</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/cemetery.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('talk1').disabled=true;
+			document.getElementById('talk2').disabled=true;
+		}
+		function checklies(){
+			var sup = localStorage.getItem("lietry");
+			if (sup == 1){
+				window.location.href = 'cemetery.html#openModal6';
+			}
+			else{
+				window.location.href = 'cemetery.html#openModal7';
+			}
+		}
+		function exit(){
+			window.location.href = 'cemeteryart.html';
+		}
+		function diary6(){
+			var d6 = "1";
+			localStorage.setItem("diary6", d6);
+		}
+		function diary7(){
+			var d7 = "2";
+			localStorage.setItem("diary7", d7);
+		}
+		var resist = 2;
+		var attribute = localStorage.getItem("physical");
+		var total = parseInt(attribute, 10);
+		var resist2 = 2;
+		var attribute2 = localStorage.getItem("physical");
+		var total2 = parseInt(attribute, 10);
+	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); check1(); check2(); check3(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	That's nice... of all the places I've ended up in the graveyard.</br>
+	Many thoughts in your mind and goosebumps make your hair in your arms stand up while you walk through this necropolis. Under the dark sky, this silence
+	like a white noise in my head.</br>
+	The dirt is muddy and I dig dipper and dipper. The shovel heavy in my hands but I must continue. The name on the tombstone "Marie Laveau", year of birth
+	1873, year of death 1919, but as I found earlier she had no relatives in New Orleans. I hear a hollow sound indicating I reached the coffin, to my
+	socking surprise... it was empty. I stop to take a breath and the questions starting bombarding my head. Who was that woman I was talking too? Was
+	she Marie Laveau? What's the connection to the Barrow case? Pieces of a puzzle I can't get together and...</br>
+	Female voice: You think you 're losing it boy? (And a hand caressing slowly your hair.)</br>
+	I almost got a heart attack and jumped up only to see "her" again!
+	</p>
+	<p class="black">
+	<button type="button" id="talk1" class="linkbutton" onclick="location.href='#openModal'; disable(); setCookie('talk1', 'true');">• How can you...</button>
+	<div id="openModal" class="modalDialog">
+		<div>
+			<p>
+			Laveau: There are powers in this world that a brat like ya self will never understand.<br/><br/>
+			<button type="button" id="response" class="linkbutton" style="color:black;" onclick="location.href='#openModal2';">• What are you talking about?</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal2" class="modalDialog">
+		<div>
+			<p>
+			Laveau: A voodoo queen over 200 years old like me, knows the ways, the dead speak to me. Giving birth to myself and transferring my soul to
+			a new body is spiritually revitalizing.</br>
+			Could it be that she's saying the truth? How else she could have known that I was here and the empty grave?</br>
+			Detective: (trembling voice) So you were behind Barrows death from the very beginning?</br>
+			Laveau: That Yankee bastard torturing my people, raping a young girl. They are slaves I tell ya, not humans!</br></br>
+			<button type="button" id="re1" class="linkbutton" style="color:black;" onclick="location.href='#openModal3';">• If I knew that from the
+			beginning I wouldn't have taken up the case. The real criminals 're going to pay. I am sure his son is aware of all those atrocities.</button></br></br>
+			<button type="button" id="re2" class="linkbutton" style="color:black;" onclick="location.href='#openModal4';">• Marie Laveau you are responsible for many
+			deaths and you have to stop all this. One step at a time, you are not the only one to pay.</button></br></br>
+			<button type="button" id="re3" class="linkbutton" style="color:black;" onclick="location.href='#openModal5';">• I've not signed up for this, it's not my
+			problem any more.</button>
+			</p>
+		</div>
+	</div>
+	</p>
+	<div id="openModal3" class="modalDialog">
+		<div>
+			<p>
+			As I walk away I still feel her eyes on my back, at least I know I am doing the right thing.</br></br>
+			<button type="button" id="exit" class="linkbutton" style="color:black;" onclick="location.href='cemeteryart.html'; diary6();">• Need to find Andrew and then go
+			over Barrows place.</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal4" class="modalDialog">
+		<div>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal8'; roll(); finalresult();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal5" class="modalDialog">
+		<div>
+			<p>
+			As I walk away I still feel her eyes on my back.</br></br>
+			<button type="button" id="exit2" class="linkbutton" style="color:black;" onclick="checklies()">• Maybe I have one more question for Laveau...</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal6" class="modalDialog">
+		<div>
+			<p>
+			I turn around only to see her charging at me. My reaction was slow, didn't expect that. The only thing I could think the last moments before
+			her nails scratch my right chick was "damn I screwed it". We fight for like a minute but I am stronger, I get to restrain her but that bitch
+			managed to hit me several times in the head scratching my face and grabbing my hair.</br></br>
+			<button type="button" id="exit3" class="linkbutton" style="color:black;" onclick="location.href='cemeteryart.html'; diary7();">• Now easy, we are going to the police Marie (her little 
+			smile disturbs me).</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal7" class="modalDialog">
+		<div>
+			<p>
+			I am walking away from all that shit.</br></br>
+			<button type="button" id="exit4" class="linkbutton" style="color:black;" onclick="location.href='cemeteryart.html'; diary6();">• Maybe I am starting to
+			believing all that crazy stuff about voodoo who knows but anyway I am done with this case. Everything has a limit and the money I was paid was merely enough
+			for this thing.</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal8" class="modalDialog">
+		<div>
+		<script type="text/javascript">
+				function finalresult(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers').innerHTML = "I turn around only to see her charging at me. My reaction was slow, didn't expect that. The only thing I could think the last moments before" +
+																		" her nails scratch my right chick was ...damn I screwed it... We fight for like a minute but I am stronger, I get to restrain her but that bitch" +
+																		" managed to hit me several times in the head scratching my face and grabbing my hair." +'<br/><br/>' +
+																		'<button type="button" class="linkbutton" style="color:black;" onclick="exit(); diary6();">• Now easy, we are going to the police Marie (her little smile disturbs me).</button>';
+					} 
+					else{
+						document.getElementById('answers').innerHTML = "I turn around only to see her charging at me. My reaction was slow, didn't expect that. The only thing I could think the last moments before" +
+																		" her nails scratch my right chick was ...damn I screwed it... We fight for like a minute but I am stronger, I get to restrain her fairly easy." + '<br/><br/>' +
+																		'<button type="button" class="linkbutton" style="color:black;" onclick="exit(); diary7();">• Now easy, we are going to the police Marie. She is screaming, spitting and cursing. The woman clearly is crazy!</button>';
+					}	
+				}
+			</script>
+			<p>
+			<p id="results"/> <!-- paragraphs for the innerHTML -->
+			<p id="results2"/>
+			<p id="answers"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled' , 'true');
+			</script>
+		</div>
+	</div>
+	<p class="black">
+	<button type="button" id="talk2" class="linkbutton" onclick="location.href='#openModal9'; disable(); setCookie('talk2', 'true');">• You! You followed me?</button>
+	</p>
+	<div id="openModal9" class="modalDialog">
+		<div>
+			<p>
+			Laveau: Don't need to, the night is my spy.<br/><br/>
+			<button type="button" id="response2" class="linkbutton" style="color:black;" onclick="location.href='#openModal10';">• What are you talking about?</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal10" class="modalDialog">
+		<div>
+			<p>
+			Laveau: A voodoo queen over 200 years old like me, knows the ways, the dead speak to me. Giving birth to myself and transferring my soul to
+			a new body is spiritually revitalizing.</br>
+			Could it be that she's saying the truth? How else she could have known that I was here and the empty grave?</br>
+			Detective: (trembling voice) So you were behind Barrows death from the very beginning?</br>
+			Laveau: That Yankee bastard torturing my people, raping a young girl. They are slaves I tell ya, not humans!</br></br>
+			<button type="button" id="re11" class="linkbutton" style="color:black;" onclick="location.href='#openModal3';">• If I knew that from the
+			beginning I wouldn't have taken up the case. The real criminals 're going to pay. I am sure his son is aware of all those atrocities.</button></br></br>
+			<button type="button" id="re21" class="linkbutton" style="color:black;" onclick="location.href='#openModal12';">• Marie Laveau you are responsible for many
+			deaths and you have to stop all this. One step at a time, you are not the only one to pay.</button></br></br>
+			<button type="button" id="re31" class="linkbutton" style="color:black;" onclick="location.href='#openModal13';">• I've not signed up for this, it's not my
+			problem any more.</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal12" class="modalDialog">
+		<div>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice2" onclick="play(); location.href='#openModal14'; roll2(); finalresult2();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal13" class="modalDialog">
+		<div>
+			<p>
+			As I walk away I still feel her eyes on my back.</br></br>
+			<button type="button" id="exit6" class="linkbutton" style="color:black;" onclick="checklies()">• Maybe I have one more question for Laveau...</button>
+			</p>
+		</div>
+	</div>
+	<div id="openModal14" class="modalDialog">
+		<div>
+		<script type="text/javascript">
+				function finalresult2(){ // continue the story depending on success rate of dices 
+					var finalres = localStorage.getItem("final");
+					if (finalres == 1){
+						document.getElementById('answers2').innerHTML = "I turn around only to see her charging at me. My reaction was slow, didn't expect that. The only thing I could think the last moments before" +
+																		" her nails scratch my right chick was ...damn I screwed it... We fight for like a minute but I am stronger, I get to restrain her but that bitch" +
+																		" managed to hit me several times in the head scratching my face and grabbing my hair." +'<br/><br/>' +
+																		'<button type="button" class="linkbutton" style="color:black;" onclick="exit(); diary6();">• Now easy, we are going to the police Marie (her little smile disturbs me).</button>';
+					} 
+					else{
+						document.getElementById('answers2').innerHTML = "I turn around only to see her charging at me. My reaction was slow, didn't expect that. The only thing I could think the last moments before" +
+																		" her nails scratch my right chick was ...damn I screwed it... We fight for like a minute but I am stronger, I get to restrain her fairly easy." + '<br/><br/>' +
+																		'<button type="button" class="linkbutton" style="color:black;" onclick="exit(); diary7();">• Now easy, we are going to the police Marie. She is screaming, spitting and cursing. The woman clearly is crazy!</button>';
+				}
+			</script>
+			<p>
+			<p id="results3"/> <!-- paragraphs for the innerHTML -->
+			<p id="results4"/>
+			<p id="answers2"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled2' , 'true');
+			</script>
+		</div>
+	</div>
+	<a id="cemetery" href="cemetery.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('cemetery'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('cemetery').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("talk1")=="true" || getCookie("talk2")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('talk1').disabled=true;
+			document.getElementById('talk2').disabled=true;
+		}
+	}
+	function check2(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+	function check3(){
+		if(getCookie("rolled2")=="true"){
+			finalresult2();
+		}
+	}
+</script>
+</html>

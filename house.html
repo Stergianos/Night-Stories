@@ -1,0 +1,172 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>House</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/house.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function play(){
+			var clicked = document.getElementById('dice');
+			clicked.play();
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('laveau').disabled=true;
+		}
+		function enable(){ 
+			var lev = document.getElementById('laveau');
+			if (lev.disabled==true){
+				document.getElementById('next').disabled=false;
+			}
+		}
+		var resist = 3;
+		var attribute = localStorage.getItem("social");
+		var skill = localStorage.getItem("lies");
+		var total = parseInt(attribute, 10) + parseInt(skill, 10);
+	</script>
+	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
+	<script type="text/javascript" src="scripts/mute.js"></script>
+</head>
+<body onLoad="checkMute(); check1(); check2(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<audio id="dice" hidden="hidden" preload> 
+		<source src = "sounds/dice.ogg"
+			type = "audio/ogg"/>
+		<source src = "sounds/dice.mp3"
+			type = "audio/mp3"/> 					
+	</audio>
+	<p class="white">
+	Smoke emerges from the chimney and a weird red like light from the half opened window. You set aside the entrance curtain and you step inside,
+	you hear clinging bone sounds from a pendant hanging from the roof. The air is heavy, mixed smells of incenses and baked beans with rice. The light of
+	a rusty petrol lamp reveals slightly the details of the room. Overburden selves with old books and colourful vials fill the place and then, a hissing
+	sound from a box in a corner.<br/>
+	I didn't even hear her footsteps. She entered through the door, a black young woman at her early thirties probably, wearing a vivid dress and a red turban.
+	</p>
+	<p class="black">
+	<button type="button" id="laveau" class="linkbutton" onclick="location.href='#openModal'; disable();  enable(); setCookie('laveau', 'true');">• Hello miss.</button>
+	<div id="openModal" class="modalDialog">
+		<div>
+		<p>
+		Woman: Hello boy, you are here for what? Love, envy greed? Name it and I have the right potion for ya!<br/>
+		Well since I am here I must play along, you never know what can infos I can get from this.<br/>
+		Detective: I am here for a girl (for a moment you pictured Louise in your mind).<br/><br/>
+		<button type="button" id="try" class="linkbutton" style="color:black;" onclick="location.href='#openModal2';">• What do you propose me?</button>
+		</p>
+		</div>
+	</div>
+	<div id="openModal2" class="modalDialog">
+		<div>
+		<script type="text/javascript">
+			function finalresult(){ // continue the story depending on success rate of dices 
+				var finalres = localStorage.getItem("final");
+				if (finalres == 1){
+					document.getElementById('answers').innerHTML = "Woman: I, Marie Laveau your Voodoo Queen got this. Two drops and she will love you for eternity."+'<br/>'+
+																	"Her voice deep, calm but dominant. She searches around and gives you a little bottle with a"+
+																	" dark orange fluid inside."+'<br/>'+"Laveau: I will wait for the results, but you gotta pay me now."+'<br/>'+
+																	"I give her the cash and I start to think the fresh air outside. I hope she believed my lies...";
+				} 
+				else{
+					document.getElementById('answers').innerHTML = "Woman: I, Marie Laveau your Voodoo Queen got this. Two drops and she will love you for eternity."+'<br/>'+
+																	"Her voice deep, calm but dominant. She searches around and gives you a little bottle with a"+
+																	" dark orange fluid inside."+'<br/>'+"Laveau: I will wait for the results, but you gotta pay me now."+'<br/>'+
+																	"I give her the cash and I start to think the fresh air outside. I hope she believed my lies...";
+					var trylie = "1";
+					localStorage.setItem('lietry', trylie);												
+				}	
+			}
+		</script>
+			<p>
+			<img class="dice" src="images/dice.png" id="rolldice" onclick="play(); location.href='#openModal3'; roll(); finalresult();"></img>
+			</p>
+		</div>
+	</div>
+	<div id="openModal3" class="modalDialog">
+		<div>
+		<a onclick="location.href='#close3'" title="" class="close">x</a> <!-- close button of popup -->
+			<p>
+			<p id="results"/> <!-- paragraphs for the innerHTML -->
+			<p id="results2"/>
+			<p id="answers"/>
+			</p>
+			<script type="text/javascript">
+				setCookie('rolled' , 'true');
+			</script>
+		</div>
+	</div>
+	</p>
+	<p class="black">
+	<button type="button" id="next" class="linkbutton" disabled="disabled" onclick="location.href='houseart.html';">• Leave this house.</button>
+	</p>
+	<a id="house" href="house.html" title="true" ></a> <!-- link used as save -->
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('house'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('house').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("laveau")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('laveau').disabled=true;
+			document.getElementById('next').disabled=false;
+		}
+	}
+	function check2(){
+		if(getCookie("rolled")=="true"){
+			finalresult();
+		}
+	}
+</script>
+</html>

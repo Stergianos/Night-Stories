@@ -24,6 +24,11 @@
 				return false;
 			}
 		}
+		function next(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			setTimeout( function(){window.location.href="neighbourhood.html";}, 300);
+		}
 	</script>
 </head>
 <body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
@@ -40,30 +45,13 @@
 				type = "audio/mp3"/>
 	</audio>
 	<br/>
-	<h4> New Orleans, November 16<sup>th</sup> 1951</h4>
+	<h4> New Orleans, November 22<sup>th</sup> 1951</h4>
 	<br/>
 	<p>
-		I am like a stray dog chasing car wheels. I just do it and don't know what I am expecting in return, probably nothing.</br></br>
-		The two clothing industries in town had nothing more to add to the case, so the lead infos are close to zero. There is something I miss in the whole
-		picture or something is kept hidden from me, but I can't work like this.</br></br>
-		It's like someone is playing with me. Fuck, it's getting on my nerves.</br></br>
-		Anyway, I ought it to myself to try harder, a case is a case and I need those money but first Barrow needs to answer a few questions. Tomorrow night
-		I'll go to that creepy silent mansion.</br></br>
-		<script type="text/javascript">
-			function next(){
-				var mafia = localStorage.getItem("mafiaFiles");
-				if (mafia == 1){
-					var clicked = document.getElementById('clickme');
-					clicked.play();
-					setTimeout( function(){window.location.href='louise.html';}, 300);
-				}
-				else{
-					var clicked = document.getElementById('clickme');
-					clicked.play();
-					setTimeout( function(){window.location.href='footchase.html'}, 300);
-				}
-			}
-		</script>
+		The nightmares are getting worse and worse. I can't explain his death. It's all so weird. Those things are what's keeping me awake so many nights.</br></br>
+		The good part from all this is the only lead I have, this little notebook. All those people referred here were associated with the case and now
+		they are missing or there gone for good. Having read it thoroughly and more than once, I see that Marshal was convinced to investigate the ghetto of our city.</br></br>
+		I am heading to the dark corners of Orleans, were oppressed people, drags and superstition are blend in all together.</br></br>
 	<a class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a>
 	</p>
 </body>

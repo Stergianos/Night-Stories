@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html lang="en-US" oncontextmenu="return false;"> <!-- oncontextmenu=return false, disables right click -->
+<head>	
+	<meta charset="UTF-8">
+	<title>Neighbourhood</title>
+	<link rel = "stylesheet"
+		  type = "text/css"
+		  href = "css/infactory.css"/>
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<!-- set default resolution settings -->
+	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<script type="text/javascript">
+		function setCookie(name, value) { //set cookie 
+			document.cookie=name+"="+value;
+		}
+		function getCookie( check_name ) {
+			var a_all_cookies = document.cookie.split( ';' ); //split cookie into name/value pairs, document.cookie only returns name=value
+			var a_temp_cookie = '';
+			var cookie_name = '';
+			var cookie_value = '';
+			var b_cookie_found = false; 
+				for ( i = 0; i < a_all_cookies.length; i++ ){ 
+					a_temp_cookie = a_all_cookies[i].split( '=' ); //split each name=value pair
+					cookie_name = a_temp_cookie[0].replace(/^\s+|\s+$/g, ''); //trim left/right whitespace
+						if ( cookie_name == check_name ){ //check cookie
+							b_cookie_found = true;
+								if ( a_temp_cookie.length > 1 ){ //if cookie exists but has no value the return is null
+								cookie_value = unescape( a_temp_cookie[1].replace(/^\s+|\s+$/g, '') );
+								}
+						return cookie_value;
+						break;
+						}	
+				a_temp_cookie = null;
+				cookie_name = '';
+				}
+			if ( !b_cookie_found ){
+				return null;
+			}
+		}
+		window.history.forward(1); // when visit next page, rewrite history of the previous page with the new one
+		function nobackforw(){
+			window.history.forward();
+			setTimeout("nobackforw()", 50); // set a minor delay to avoid going back with fast multi-clicking, mostly for safari
+		}
+		window.onunload=function(){void(0)} // fixing bug on safari returning the background of the previous page with back button
+		document.onkeydown = function(e) {
+		// keycode for F5
+			if (e.keyCode === 116) {
+				return false;
+			}
+		// keycode for backspace
+			if (e.keyCode === 8) {
+				return false;
+			}
+		// keycode for R (mac)
+			if (e.keyCode === 82) {
+				return false;
+			}
+		}
+		function disable(){ // disable choice when clicked
+			document.getElementById('talk').disabled=true;
+		}
+		function next(){
+			window.location.href='house.html';
+		}
+	</script>
+</head>
+<body onLoad="check1(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<fieldset>
+	<p class="white">
+	You can feel it! The town changes as you walk deeper into this mysterious neighbourhood. Narrow alleys, small wooden houses stacked all together and
+	the smell of mould is intense. Weird looks fall upon you and windows closing one after another... At last, after a few minutes you find three people
+	standing on the road talking to each other. They are black like the majority of the population here.
+	</p>
+	<p class="black">
+	<script type="text/javascript">
+			function checklang(){ // continue the story depending on success rate of dices 
+				var sl = localStorage.getItem("second language");
+				if (sl == 1){
+					document.getElementById('answers').innerHTML = "They say hello to me in a weird french dialogue. Luckily when I was young I had friends talking this language and I learned a bit myself."+
+																	'<br/>' +"Man: I know what ya looking for here white boy."+'</br>'+"He makes a sign to follow him."+'</br>'+"I don't have much time to talk but he seems to think otherwise."+'</br>'+
+																	"Man: It's not safe for ya to be round here, even now that this ole black slave thing is over. My brothers and sisters still have a hate on for your people, cause you still see us as inferiors."+
+																	'</br>'+"We stop and he points at a house."+'</br>'+"Man: Gotta go."+'</br>'+"Detective: Thanks..."+'</br></br>'+
+																	'<button type="button" class="linkbutton" style="color:black;" onclick="next()">• You take a good look at the house.</button>';
+				} 
+				else{
+					document.getElementById('answers').innerHTML = "I approach them and after a few words that we exchange I can understand that the communication"+
+																	" is going to be really hard. "+'<br/>'+"They say something in their language while laughing. Probably"+
+																	" making fun of me, but now it's not the time neither the place for that."+'<br/>'+"Then all of a sudden he grabs my hand and shows me a house down the street."+'</br></br>'+
+																	'<button type="button" class="linkbutton" style="color:black;" onclick="next()">• You take a good look at the house.</button>';
+				}	
+			}
+		</script>
+	<button type="button" id="talk" class="linkbutton" onclick="location.href='#openModal'; disable(); checklang(); setCookie('talk', 'true');">• Go there and talk to 
+	them, maybe you can acquire something that will lead you to your next clue.</button>
+	</p>
+	<a id="neighbourhood" href="neighbourhood.html" title="true" ></a> <!-- link used as save -->
+	<div id="openModal" class="modalDialog">
+		<div>
+		<p>
+		<p id="answers"/>
+		</p>
+		</div>
+	</div>
+</fieldset>
+</body>
+<script type="text/javascript">
+	var url = document.getElementById('neighbourhood'); // store the current url and value for future load 
+	localStorage.setItem('save', url);
+	var urlval = document.getElementById('neighbourhood').title;
+	localStorage.setItem('urlval', urlval);
+	function check1(){
+		if(getCookie("talk")=="true"){ //checks for cookie, if exists name/value keep button disable status or same results on modal
+			document.getElementById('talk').disabled=true;
+		}
+	}
+</script>
+</html>

@@ -24,6 +24,11 @@
 				return false;
 			}
 		}
+		function next(){
+			var clicked = document.getElementById('clickme');
+			clicked.play();
+			setTimeout( function(){window.location.href="epilogue.html";}, 300);
+		}
 	</script>
 </head>
 <body onload="checkMute(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
@@ -40,30 +45,13 @@
 				type = "audio/mp3"/>
 	</audio>
 	<br/>
-	<h4> New Orleans, November 16<sup>th</sup> 1951</h4>
+	<h4> New Orleans, November 25<sup>th</sup> 1951</h4>
 	<br/>
 	<p>
-		I am like a stray dog chasing car wheels. I just do it and don't know what I am expecting in return, probably nothing.</br></br>
-		The two clothing industries in town had nothing more to add to the case, so the lead infos are close to zero. There is something I miss in the whole
-		picture or something is kept hidden from me, but I can't work like this.</br></br>
-		It's like someone is playing with me. Fuck, it's getting on my nerves.</br></br>
-		Anyway, I ought it to myself to try harder, a case is a case and I need those money but first Barrow needs to answer a few questions. Tomorrow night
-		I'll go to that creepy silent mansion.</br></br>
-		<script type="text/javascript">
-			function next(){
-				var mafia = localStorage.getItem("mafiaFiles");
-				if (mafia == 1){
-					var clicked = document.getElementById('clickme');
-					clicked.play();
-					setTimeout( function(){window.location.href='louise.html';}, 300);
-				}
-				else{
-					var clicked = document.getElementById('clickme');
-					clicked.play();
-					setTimeout( function(){window.location.href='footchase.html'}, 300);
-				}
-			}
-		</script>
+		If only my arms and legs was not shaking so much. What have gotten into me? Her presence, her speech was inspiring fear.</br></br>
+		I have seen, I know now and I have to find a way to continue living with this. Dark and supernatural beings are among us, it's crazy at 
+		first thought but...</br></br>
+		4:30 am and still awake, staring at a burned, covered in wax piece of cloth that I found in my door...</br></br> 
 	<a class="links" type="button" onclick="next()"><img src="images/next.png" class="imagenext"/></a>
 	</p>
 </body>

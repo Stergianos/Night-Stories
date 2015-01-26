@@ -1,0 +1,11 @@
+html { 
+	font-size:100%;	/*best for responsive*/
+	background: url('book.jpg');
+	background-position: 50% 50%; /*responsive background*/
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	-webkit-user-select: none; /*unselectable*/      
+	-moz-user-select: none; 
+	-ms-user-select: none; 
+}

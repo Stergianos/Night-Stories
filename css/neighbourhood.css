@@ -33,13 +33,6 @@ fieldset {
   border-radius: 5px;  
   -webkit-border-radius: 15px; 
 }
-.dice{
-	width:70%;
-	display: block;
-    margin-left: auto;
-    margin-right: auto;
-	cursor: pointer;
-}
 .linkbutton{ /*make button appear like a link*/
 	background:none!important;
 	border:none; 

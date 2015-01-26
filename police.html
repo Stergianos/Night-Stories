@@ -10,7 +10,6 @@
 	<!-- set default resolution settings -->
 	<meta name="viewport" content="width=1920px,initial-scale=1,maximum-scale=1,user-scalable=no"> 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 	<script type="text/javascript">		
 		function setCookie(name, value) { //set cookie 
 			document.cookie=name+"="+value;
@@ -107,7 +106,7 @@
 	<script type="text/javascript" src="scripts/dice.js"></script> <!-- call external js file -->
 	<script type="text/javascript" src="scripts/mute.js"></script>
 </head>
-<body onLoad="checkMute(); check1(); check2(); check3(); check4(); check5(); enable()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
+<body onLoad="checkMute(); check1(); check2(); check3(); check4(); check5(); enable(); nobackforw()" onpageshow="if (event.persisted) nobackforw();"> <!-- event.persisted for avoiding multi-clicking -->
 <fieldset>
 	<audio id="dice" hidden="hidden" preload> 
 		<source src = "sounds/dice.ogg"
